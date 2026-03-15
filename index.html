@@ -1,802 +1,1693 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Project PRANAA – Impact Assessment</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project PRANAA — Production Interview Form</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --blue:#1F4E79;--mid:#2E75B6;--light:#D6E4F0;--amber:#C17F24;
-    --yellow:#FFF8E1;--green:#2e7d32;--red:#c62828;
-    --bg:#f5f7fa;--card:#ffffff;--text:#1a1a1a;--muted:#555;--border:#dde3ea;
+  :root {
+    --navy: #17395a;
+    --navy-2: #214b74;
+    --pink: #d83e88;
+    --gold: #cc8f16;
+    --bg: #f4f7fb;
+    --card: #ffffff;
+    --line: #d7dde7;
+    --muted: #5a6470;
+    --text: #1a1f26;
+    --success-bg: #e7f7ee;
+    --success-fg: #15663b;
+    --warn-bg: #fff4db;
+    --warn-fg: #7b5600;
+    --error-bg: #fde8e8;
+    --error-fg: #982525;
+    --info-bg: #e8f1fb;
+    --info-fg: #1d4f7a;
+    --shadow: 0 10px 30px rgba(16, 31, 48, 0.08);
   }
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0 0 60px}
-  header{background:var(--blue);color:#fff;padding:18px 20px 14px;text-align:center}
-  header h1{font-size:1.5rem;font-weight:700;letter-spacing:.5px}
-  header p{font-size:.85rem;opacity:.85;margin-top:4px}
-  .progress-bar{background:#1a3a5c;height:6px}
-  .progress-fill{background:var(--amber);height:100%;transition:width .4s ease;min-width:2%}
-  .progress-label{background:var(--blue);color:#fff;text-align:center;font-size:.75rem;padding:4px 0 6px;opacity:.8}
-  .container{max-width:680px;margin:0 auto;padding:20px 16px}
-  .card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:24px 22px;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-  h2{font-size:1.15rem;font-weight:700;color:var(--blue);margin-bottom:10px}
-  h3{font-size:1rem;font-weight:600;color:var(--text);margin:18px 0 8px;line-height:1.4}
-  .section-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mid);background:var(--light);padding:5px 10px;border-radius:6px;display:inline-block;margin-bottom:14px}
-  p.desc{font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:12px}
-  label.field-label{display:block;font-size:.9rem;font-weight:600;margin-bottom:6px;color:var(--text)}
-  input[type=text],input[type=number],input[type=email],input[type=tel],select,textarea{
-    width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;
-    font-size:.92rem;color:var(--text);background:#fff;outline:none;transition:border .2s;font-family:inherit
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(180deg, #eef3f9 0%, var(--bg) 220px, var(--bg) 100%);
+    color: var(--text);
+    line-height: 1.45;
   }
-  input:focus,select:focus,textarea:focus{border-color:var(--mid);box-shadow:0 0 0 3px rgba(46,117,182,.12)}
-  textarea{resize:vertical;min-height:80px}
-  .radio-group,.check-group{display:flex;flex-direction:column;gap:8px;margin-top:6px}
-  .radio-group label,.check-group label{
-    display:flex;align-items:flex-start;gap:10px;
-    background:#f8fafc;border:1.5px solid var(--border);
-    border-radius:8px;padding:10px 12px;cursor:pointer;font-size:.88rem;line-height:1.4;
-    transition:background .15s,border-color .15s
+
+  .shell {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 16px 56px;
   }
-  .radio-group label:hover,.check-group label:hover{background:var(--light);border-color:var(--mid)}
-  .radio-group label.selected,.check-group label.selected{background:var(--light);border-color:var(--mid);color:var(--blue)}
-  .radio-group input[type=radio],.check-group input[type=checkbox]{margin-top:2px;accent-color:var(--mid);flex-shrink:0;width:16px;height:16px}
-  .q-block{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border)}
-  .q-block:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
-  .q-num{display:inline-block;background:var(--blue);color:#fff;font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:4px;margin-bottom:8px}
-  .new-badge{display:inline-block;background:#FFF3CD;color:#856404;font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:6px;vertical-align:middle}
-  .note-box{background:var(--yellow);border-left:4px solid var(--amber);border-radius:0 8px 8px 0;padding:12px 14px;font-size:.84rem;color:#6d4c00;margin-bottom:16px;line-height:1.5}
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;border:none;transition:background .2s,transform .1s}
-  .btn:active{transform:scale(.98)}
-  .btn-primary{background:var(--blue);color:#fff}
-  .btn-primary:hover{background:#163b5c}
-  .btn-secondary{background:#fff;color:var(--blue);border:2px solid var(--blue)}
-  .btn-secondary:hover{background:var(--light)}
-  .btn-amber{background:var(--amber);color:#fff}
-  .btn-amber:hover{background:#a06c1a}
-  .btn-row{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
-  .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-  .type-card{border:2px solid var(--border);border-radius:10px;padding:14px 12px;cursor:pointer;text-align:center;transition:all .2s;background:#fff}
-  .type-card:hover{border-color:var(--mid);background:var(--light)}
-  .type-card.active{border-color:var(--blue);background:var(--light)}
-  .type-card .icon{font-size:1.5rem;margin-bottom:6px;display:block}
-  .type-card span{font-size:.82rem;font-weight:600;color:var(--text);line-height:1.3;display:block}
-  .required{color:var(--red);margin-left:2px}
-  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-  @media(max-width:480px){.field-row{grid-template-columns:1fr}.type-grid{grid-template-columns:1fr}}
-  .thank-you{text-align:center;padding:40px 20px}
-  .thank-you .check-circle{width:64px;height:64px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:2rem;color:#fff}
-  .thank-you h2{color:var(--green);font-size:1.4rem;margin-bottom:10px}
-  .thank-you p{color:var(--muted);font-size:.92rem;line-height:1.6;max-width:400px;margin:0 auto}
-  .error-msg{color:var(--red);font-size:.78rem;margin-top:4px;display:none}
-  .field.has-error input,.field.has-error select,.field.has-error textarea{border-color:var(--red)}
-  .field.has-error .error-msg{display:block}
-  .exposure-tag{display:inline-block;background:#e3f2fd;color:#0d47a1;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:8px;letter-spacing:.3px}
-  .lang-note{font-size:.75rem;color:var(--muted);margin-top:4px;font-style:italic}
-  #page-cover,#page-form,#page-thanks{display:none}
-  #page-cover.active,#page-form.active,#page-thanks.active{display:block}
-  .step-counter{display:flex;gap:6px;justify-content:center;margin:12px 0 4px}
-  .step-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35)}
-  .step-dot.active{background:#fff}
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(23, 57, 90, 0.96);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    border-bottom: 4px solid var(--pink);
+    box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  }
+
+  .head-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 18px 16px 14px;
+    display: flex;
+    align-items: end;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .brand-title {
+    margin: 0;
+    font-size: clamp(1.25rem, 2.5vw, 1.7rem);
+    font-weight: 900;
+    letter-spacing: .02em;
+  }
+
+  .brand-title span { color: #ff83bf; }
+
+  .brand-sub {
+    margin-top: 4px;
+    color: #c8d8ea;
+    font-size: .93rem;
+  }
+
+  .head-side {
+    margin-left: auto;
+    font-size: .85rem;
+    color: #c8d8ea;
+    text-align: right;
+  }
+
+  .top-grid {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    gap: 16px;
+    margin: 20px 0 16px;
+  }
+
+  @media (max-width: 860px) {
+    .top-grid { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .intro {
+    padding: 18px 20px;
+  }
+
+  .intro h2, .panel-head h2 {
+    margin: 0 0 8px;
+    font-size: 1.2rem;
+  }
+
+  .intro p {
+    margin: 8px 0;
+    color: var(--muted);
+  }
+
+  .notice-stack {
+    display: grid;
+    gap: 10px;
+    padding: 18px;
+  }
+
+  .notice {
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    font-size: .95rem;
+  }
+
+  .notice strong { display: block; margin-bottom: 4px; }
+  .notice.info { background: var(--info-bg); color: var(--info-fg); border-color: #bdd1ea; }
+  .notice.warn { background: var(--warn-bg); color: var(--warn-fg); border-color: #ebcf87; }
+  .notice.error { background: var(--error-bg); color: var(--error-fg); border-color: #efb0b0; }
+  .notice.success { background: var(--success-bg); color: var(--success-fg); border-color: #99d4ae; }
+
+  .utility-bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0 0 18px;
+  }
+
+  .role-switcher {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn, .ghost-btn, .primary-btn {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 10px 14px;
+    background: #fff;
+    color: var(--navy);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .18s ease;
+  }
+
+  .tab-btn:hover, .ghost-btn:hover, .primary-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .tab-btn.active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: #fff;
+  }
+
+  .ghost-btn {
+    color: var(--navy-2);
+    background: #fff;
+  }
+
+  .primary-btn {
+    background: var(--pink);
+    border-color: var(--pink);
+    color: #fff;
+  }
+
+  .primary-btn[disabled] {
+    opacity: .65;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .endpoint-pill {
+    margin-left: auto;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-weight: 700;
+    font-size: .9rem;
+  }
+
+  @media (max-width: 860px) {
+    .endpoint-pill { margin-left: 0; }
+  }
+
+  .panel {
+    display: none;
+  }
+  .panel.active {
+    display: block;
+  }
+
+  .panel-head {
+    padding: 20px 22px 14px;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(135deg, #fff, #f7faff);
+    border-radius: 18px 18px 0 0;
+  }
+
+  .panel-head p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .panel-body {
+    padding: 18px;
+    display: grid;
+    gap: 16px;
+  }
+
+  .section-card {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 16px;
+    background: #fff;
+  }
+
+  .section-card h3 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+    color: var(--navy);
+  }
+
+  .section-desc {
+    margin: 0 0 12px;
+    color: var(--muted);
+    font-size: .92rem;
+  }
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+  }
+
+  @media (max-width: 760px) {
+    .field-grid { grid-template-columns: 1fr; }
+  }
+
+  .field {
+    display: grid;
+    gap: 6px;
+  }
+
+  .field.full {
+    grid-column: 1 / -1;
+  }
+
+  .field label {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: .92rem;
+  }
+
+  .req {
+    color: #b3261e;
+    font-weight: 800;
+  }
+
+  .field input,
+  .field select,
+  .field textarea {
+    width: 100%;
+    border: 1px solid #c8d1de;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font: inherit;
+    color: var(--text);
+    background: #fff;
+  }
+
+  .field textarea {
+    min-height: 92px;
+    resize: vertical;
+  }
+
+  .help {
+    font-size: .84rem;
+    color: var(--muted);
+  }
+
+  .consent-box {
+    display: grid;
+    gap: 10px;
+  }
+
+  .checkline {
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: #fbfdff;
+  }
+
+  .checkline input {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--navy);
+  }
+
+  .question {
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 14px;
+    background: #fff;
+  }
+
+  .question + .question {
+    margin-top: 12px;
+  }
+
+  .question.hidden {
+    display: none;
+  }
+
+  .question-header {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .q-tag {
+    min-width: 42px;
+    text-align: center;
+    border-radius: 10px;
+    padding: 6px 8px;
+    background: var(--navy);
+    color: #fff;
+    font-size: .82rem;
+    font-weight: 800;
+  }
+
+  .q-tag.new {
+    background: #ad2634;
+  }
+
+  .q-tag.exp {
+    background: #7b5600;
+  }
+
+  .q-title {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .q-title .tiny {
+    font-size: .82rem;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .probe {
+    margin: 6px 0 10px 54px;
+    color: var(--muted);
+    font-size: .9rem;
+    font-style: italic;
+  }
+
+  .choices {
+    display: grid;
+    gap: 8px;
+    margin-left: 54px;
+  }
+
+  .choice {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    background: #fbfdff;
+  }
+
+  .choice:hover {
+    border-color: #9eb5d1;
+    background: #f3f8fd;
+  }
+
+  .choice input {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--navy);
+    flex: 0 0 auto;
+  }
+
+  .choice span {
+    display: block;
+  }
+
+  .supporting-grid {
+    display: grid;
+    gap: 10px;
+    margin: 12px 0 0 54px;
+  }
+
+  .conditional-box[hidden] {
+    display: none;
+  }
+
+  .inline-note {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: .9rem;
+  }
+
+  .error-text {
+    color: #b3261e;
+  }
+
+  .field.invalid input,
+  .field.invalid select,
+  .field.invalid textarea,
+  .question.invalid,
+  .checkline.invalid {
+    border-color: #d14343;
+    box-shadow: 0 0 0 3px rgba(209, 67, 67, .12);
+  }
+
+  .question.invalid {
+    background: #fff8f8;
+  }
+
+  .status {
+    display: none;
+    padding: 12px 14px;
+    border-radius: 14px;
+    margin-top: 12px;
+    font-weight: 700;
+  }
+
+  .status.show { display: block; }
+  .status.info { background: var(--info-bg); color: var(--info-fg); border: 1px solid #bdd1ea; }
+  .status.warn { background: var(--warn-bg); color: var(--warn-fg); border: 1px solid #ebcf87; }
+  .status.error { background: var(--error-bg); color: var(--error-fg); border: 1px solid #efb0b0; }
+  .status.success { background: var(--success-bg); color: var(--success-fg); border: 1px solid #99d4ae; }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: .9rem;
+  }
+
+  .summary-list {
+    margin: 6px 0 0 18px;
+  }
+
+  .summary-list li + li { margin-top: 4px; }
+
+  .footer-note {
+    color: var(--muted);
+    font-size: .86rem;
+  }
 </style>
 </head>
 <body>
-
 <header>
-  <h1>Project PRANAA</h1>
-  <p>Need &amp; Impact Assessment · People to People Health Foundation</p>
+  <div class="head-inner">
+    <div>
+      <h1 class="brand-title">PROJECT <span>PRANAA</span></h1>
+      <div class="brand-sub">Production-ready interview form for need and impact assessment</div>
+    </div>
+    <div class="head-side">People to People Health Foundation<br>Interviewer-administered version</div>
+  </div>
 </header>
-<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:5%"></div></div>
-<div class="progress-label" id="progressLabel">Step 1 of 5</div>
 
-<div class="container">
-
-<!-- ══════ COVER PAGE ══════ -->
-<div id="page-cover" class="active">
-  <div class="card" style="margin-top:12px">
-    <h2>Welcome</h2>
-    <p class="desc">This short assessment helps us understand how Project PRANAA has affected your community's health. Your responses are <strong>confidential</strong> and will only be used to improve the programme. It takes about <strong>10–15 minutes</strong>.</p>
-    <div class="note-box">&#128274; Your name is optional. There are no right or wrong answers — please share your honest experience.</div>
-
-    <label class="field-label">Select your role <span class="required">*</span></label>
-    <p class="desc" style="margin-bottom:10px">Who are you? This helps us ask you the most relevant questions.</p>
-
-    <div class="type-grid" id="typeGrid">
-      <div class="type-card" data-type="community" onclick="selectType(this,'community')">
-        <span class="icon">&#127968;</span>
-        <span>Community Member / Camp Attendee</span>
+<div class="shell">
+  <div class="top-grid">
+    <section class="card intro">
+      <h2>Before you use this form</h2>
+      <p>This version is built for field interviews, not casual self-entry. It uses proper single-select and multi-select inputs, validates required fields, captures consent, supports conditional follow-up prompts, and never claims a save succeeded unless the server confirms it.</p>
+      <p>Drafts are autosaved in the browser. If the device is offline or the server fails, the interview is queued locally so you do not lose data. You can also export a JSON backup for manual upload.</p>
+      <p class="footer-note">Do not collect full names unless they are genuinely required. For health-related interviews, initials or an interview ID are safer.</p>
+    </section>
+    <aside class="card notice-stack">
+      <div id="endpointNotice" class="notice warn"></div>
+      <div id="queueNotice" class="notice info"></div>
+      <div class="notice info">
+        <strong>Expected server response</strong>
+        The submit endpoint should return JSON like <code>{"ok": true, "submissionId": "..."}</code>. If it does not, the form treats the submission as failed and keeps a local backup.
       </div>
-      <div class="type-card" data-type="asha" onclick="selectType(this,'asha')">
-        <span class="icon">&#129658;</span>
-        <span>ASHA / ANM / Frontline Worker</span>
-      </div>
-      <div class="type-card" data-type="nurse" onclick="selectType(this,'nurse')">
-        <span class="icon">&#129657;</span>
-        <span>Staff Nurse at PHC</span>
-      </div>
-      <div class="type-card" data-type="teacher" onclick="selectType(this,'teacher')">
-        <span class="icon">&#127979;</span>
-        <span>School Teacher</span>
-      </div>
-      <div class="type-card" data-type="panchayat" onclick="selectType(this,'panchayat')">
-        <span class="icon">&#127963;</span>
-        <span>Panchayat / Community Leader</span>
-      </div>
-      <div class="type-card" data-type="doctor" onclick="selectType(this,'doctor')">
-        <span class="icon">&#129658;</span>
-        <span>PHC Medical Officer</span>
-      </div>
-    </div>
-    <p id="type-error" class="error-msg" style="display:none;margin-top:8px">&#9888; Please select your role to continue.</p>
-
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="startForm()">Start &#8594;</button>
-    </div>
+    </aside>
   </div>
-</div>
 
-<!-- ══════ FORM PAGE ══════ -->
-<div id="page-form">
-  <div id="form-sections"></div>
-
-  <div class="btn-row" id="nav-btns">
-    <button class="btn btn-secondary" id="btn-prev" onclick="prevSection()" style="display:none">&#8592; Back</button>
-    <button class="btn btn-primary" id="btn-next" onclick="nextSection()">Next &#8594;</button>
-    <button class="btn btn-amber" id="btn-submit" onclick="submitForm()" style="display:none">Submit Responses &#10003;</button>
+  <div class="utility-bar">
+    <div class="role-switcher" id="roleTabs" role="tablist" aria-label="Stakeholder role"></div>
+    <button type="button" class="ghost-btn" id="syncQueueBtn">Sync queued submissions</button>
+    <button type="button" class="ghost-btn" id="downloadQueueBtn">Download queued backup</button>
+    <div class="endpoint-pill notice info" id="endpointPill"></div>
   </div>
-</div>
 
-<!-- ══════ THANK YOU ══════ -->
-<div id="page-thanks">
-  <div class="card thank-you">
-    <div class="check-circle">&#10003;</div>
-    <h2>Thank you!</h2>
-    <p>Your response has been recorded. Your feedback helps PPHF improve NCD healthcare services in your community. We are grateful for your time.</p>
-    <p style="margin-top:16px;font-size:.82rem;color:#888">Project PRANAA · People to People Health Foundation · pphfglobal.org</p>
-  </div>
+  <div id="app"></div>
 </div>
-
-</div><!-- /container -->
 
 <script>
-var selectedType = '';
-var responses = {};
-var currentSection = 0;
-var sections = [];
+  const APP_CONFIG = {
+    // Google Apps Script web-app URL. GAS requires no-cors so server confirmation
+    // cannot be read by the browser. Data is always saved locally first.
+    SUBMIT_ENDPOINT: 'https://script.google.com/macros/s/AKfycbwI99r5WObiDuWFZp7bgcqFaOfzOEAzD5hDNhZ0Zbx_FVDGRiC7nZaQKHQez_oPrfum/exec',
+    REQUEST_TIMEOUT_MS: 20000,
+    FORM_VERSION: 'PRANAA-prod-2026-03-15',
+    DRAFT_PREFIX: 'pranaa_draft_v1_',
+    QUEUE_KEY: 'pranaa_unsent_queue_v1',
+    ACTIVE_ROLE_KEY: 'pranaa_active_role_v1',
+    AUTOSAVE_DEBOUNCE_MS: 400
+  };
 
-function selectType(el, type){
-  document.querySelectorAll('.type-card').forEach(function(c){c.classList.remove('active');});
-  el.classList.add('active');
-  selectedType = type;
-  document.getElementById('type-error').style.display = 'none';
-}
-
-function startForm(){
-  if(!selectedType){document.getElementById('type-error').style.display='block';return;}
-  sections = buildSections(selectedType);
-  currentSection = 0;
-  document.getElementById('page-cover').classList.remove('active');
-  document.getElementById('page-form').classList.add('active');
-  renderSection();
-}
-
-function buildSections(type){
-  var all = [];
-
-  // ── SECTION 0: Basic details ──────────────────────────────────────────
-  all.push({
-    title: 'Your details',
-    id: 'details',
-    html: function(){
-      var f = '<div class="section-label">Basic information</div>';
-      f += '<p class="desc">This information helps us understand who participated. All fields are optional.</p>';
-      f += field('Name (optional)', 'text', 'det_name', false);
-      f += twoCol(
-        field('Age', 'number', 'det_age', false, '', '25'),
-        field('Gender', 'select', 'det_gender', false, ['Prefer not to say','Female','Male','Other'])
-      );
-      f += field('Village / Area / Location', 'text', 'det_village', false);
-      f += field('Date (today)', 'text', 'det_date', false, '', new Date().toLocaleDateString('en-IN'));
-      return f;
+  const ROLE_CONFIG = {
+    community: {
+      icon: '🏘️',
+      title: 'Community Member / Beneficiary',
+      description: 'For individuals who attended a PRANAA NCD screening camp.',
+      submitLabel: 'Submit community interview',
+      fields: [
+        { name: 'cm_name', label: 'Name or initials', type: 'text', required: false, placeholder: 'Use initials if possible', full: false },
+        { name: 'cm_age', label: 'Age', type: 'number', required: true, min: 0, max: 120, placeholder: 'Age in years', full: false },
+        { name: 'cm_gender', label: 'Gender', type: 'select', required: true, options: ['', 'Male', 'Female', 'Other'] },
+        { name: 'cm_village', label: 'Village / Ward', type: 'text', required: true, placeholder: 'Village name' },
+        { name: 'cm_date', label: 'Date of interview', type: 'date', required: true },
+        { name: 'cm_interviewer', label: 'Interviewer name', type: 'text', required: true, placeholder: 'Your name' },
+        { name: 'cm_camp', label: 'Camp attended (date/location)', type: 'text', required: true, placeholder: 'Camp date or location', full: true },
+        { name: 'cm_ncd', label: 'NCD condition identified (if any)', type: 'text', required: false, placeholder: 'e.g. Hypertension, Diabetes', full: true }
+      ]
+    },
+    asha: {
+      icon: '👩',
+      title: 'ASHA Worker',
+      description: 'For ASHA workers involved in PRANAA mobilisation or follow-up.',
+      submitLabel: 'Submit ASHA interview',
+      fields: [
+        { name: 'asha_name', label: 'Name', type: 'text', required: true, placeholder: 'ASHA worker name' },
+        { name: 'asha_village', label: 'Village / Sub-centre', type: 'text', required: true, placeholder: 'Village or sub-centre' },
+        { name: 'asha_years', label: 'Years as ASHA worker', type: 'number', required: true, min: 0, max: 60, placeholder: 'Years' },
+        { name: 'asha_pphf_months', label: 'Months working with PPHF', type: 'number', required: true, min: 0, max: 240, placeholder: 'Months' },
+        { name: 'asha_date', label: 'Date of interview', type: 'date', required: true },
+        { name: 'asha_interviewer', label: 'Interviewer name', type: 'text', required: true, placeholder: 'Your name' }
+      ]
+    },
+    nurse: {
+      icon: '🩺',
+      title: 'Staff Nurse / Nursing Officer',
+      description: 'For nurses and nursing officers at PHCs involved in PRANAA camps.',
+      submitLabel: 'Submit staff nurse interview',
+      fields: [
+        { name: 'nurse_name', label: 'Name', type: 'text', required: true, placeholder: 'Staff name' },
+        { name: 'nurse_phc', label: 'PHC name and location', type: 'text', required: true, placeholder: 'PHC name, village' },
+        { name: 'nurse_desg', label: 'Designation', type: 'text', required: true, placeholder: 'e.g. Staff Nurse, Nursing Officer' },
+        { name: 'nurse_years', label: 'Years of service', type: 'number', required: true, min: 0, max: 60, placeholder: 'Years' },
+        { name: 'nurse_date', label: 'Date of interview', type: 'date', required: true },
+        { name: 'nurse_interviewer', label: 'Interviewer name', type: 'text', required: true, placeholder: 'Your name' }
+      ]
+    },
+    doctor: {
+      icon: '👨‍⚕️',
+      title: 'Doctor',
+      description: 'For PHC medical officers, specialist doctors, and private practitioners involved in PRANAA.',
+      submitLabel: 'Submit doctor interview',
+      fields: [
+        { name: 'doc_name', label: 'Name', type: 'text', required: true, placeholder: 'Doctor name' },
+        { name: 'doc_spec', label: 'Specialisation', type: 'text', required: true, placeholder: 'e.g. Gynaecologist, Dentist, General' },
+        { name: 'doc_org', label: 'Organisation / Hospital', type: 'text', required: true, placeholder: 'Hospital or PHC name' },
+        { name: 'doc_camps', label: 'No. of PRANAA camps attended', type: 'number', required: true, min: 0, max: 999, placeholder: 'Number of camps' },
+        { name: 'doc_date', label: 'Date of interview', type: 'date', required: true },
+        { name: 'doc_interviewer', label: 'Interviewer name', type: 'text', required: true, placeholder: 'Your name' }
+      ]
+    },
+    govt: {
+      icon: '🏛️',
+      title: 'Government Official',
+      description: 'For CHO, DHO, Health Inspectors, and Gram Panchayat representatives.',
+      submitLabel: 'Submit government interview',
+      fields: [
+        { name: 'gov_name', label: 'Name', type: 'text', required: true, placeholder: 'Official name' },
+        { name: 'gov_desg', label: 'Designation', type: 'text', required: true, placeholder: 'e.g. CHO, DHO, HIO, Sarpanch' },
+        { name: 'gov_area', label: 'Area / Jurisdiction', type: 'text', required: true, placeholder: 'Block, taluk, or village' },
+        { name: 'gov_org', label: 'Organisation', type: 'text', required: true, placeholder: 'Department or institution' },
+        { name: 'gov_date', label: 'Date of interview', type: 'date', required: true },
+        { name: 'gov_interviewer', label: 'Interviewer name', type: 'text', required: true, placeholder: 'Your name' }
+      ]
     }
-  });
+  };
 
-  // ── SECTION 1: Exposure ──────────────────────────────────────────────
-  if(type !== 'community'){
-    all.push({
-      title: 'Your exposure to PRANAA',
-      id: 'exposure',
-      html: function(){
-        var f = '<div class="section-label">Exposure verification</div>';
-        f += '<p class="desc">These 3 questions help us understand how much you have directly seen or participated in PRANAA activities.</p>';
-        f += checkQ('E1', 'Which PRANAA activities have you personally seen or participated in?', [
-          'NCD screening camps',
-          'Community awareness sessions',
-          "Women's Wellness Camps",
-          'School-based health sessions',
-          'Training of health workers',
-          'Referral / follow-up support',
-          'Government scheme linkage (ABHA / PMJAY)',
-          'None / Not sure'
-        ], 'exp_e1');
-        f += radioQ('E2', 'Approximately how many PRANAA camps or sessions have you attended or observed?', ['1–2','3–5','6–10','More than 10','Cannot recall'], 'exp_e2');
-        f += radioQ('E3', 'Over what time period have you been involved with PRANAA?', ['Less than 3 months','3–6 months','6–12 months','More than 12 months','Not sure'], 'exp_e3');
-        return f;
-      }
-    });
-  }
+  const EXPOSURE_QUESTIONS = [
+  {
+    id: 'E1', text: 'Which PRANAA activities have you personally seen or taken part in?',
+    probe: 'Tick all that apply. If None → note why; may still proceed.',
+    multi: true,
+    options: [
+      'NCD screening camps',
+      'Community awareness sessions',
+      "Women's Wellness Camps",
+      'Training of health workers',
+      'Referral / follow-up support',
+      'Government scheme linkage (ABHA / PMJAY)',
+      'None / Not sure'
+    ]
+  },
+  {
+    id: 'E2', text: 'Approximately how many PRANAA camps or sessions have you attended or observed?',
+    probe: 'Helps understand depth of experience before impact questions.',
+    options: ['1–2', '3–5', '6–10', 'More than 10', 'Cannot recall']
+  },
+];
 
-  // ── SECTION 2: Role-specific close-ended ────────────────────────────
-  if(type === 'community'){
-    all.push({
-      title: 'About the camp you attended',
-      id: 'camp',
-      html: function(){
-        var f = '<div class="section-label">Camp experience</div>';
-        f += radioQ('Q1', 'How did you first hear about the PRANAA NCD screening camp?', [
-          'Through the ASHA worker','Through a neighbour or family member',
-          'Through a village announcement','Through a school child','Other'
-        ], 'q1');
-        f += radioQ('Q2', 'What was your main reason for attending the camp?', [
-          'Tests were free','ASHA worker personally asked me',
-          'I had symptoms and was worried','Just wanted a routine check-up',
-          'Family member encouraged me'
-        ], 'q2');
-        f += radioQ('Q3', 'Before this camp, had you ever been screened for BP, blood sugar, or cancer?', [
-          'Yes, regularly','Yes, once or twice',
-          'No — this was my first time','No — I did not know such tests existed'
-        ], 'q3');
-        f += radioQ('Q4', 'Which activity did you attend?', [
-          'General NCD screening camp',"Women's Wellness Camp",
-          'Awareness session','School or community health event'
-        ], 'q4');
-        f += radioQ('Q5', 'Did the health staff explain your test results clearly?', [
-          'Yes, very clearly','Yes, but only briefly',
-          'Somewhat — I had to ask multiple times','No — I was not given a clear explanation'
-        ], 'q5');
-        return f;
-      }
-    });
-    all.push({
-      title: 'After the camp — referral & follow-up',
-      id: 'followup',
-      html: function(){
-        var f = '<div class="section-label">Referral &amp; follow-up</div>';
-        f += radioQ('Q6', 'Did you receive a written referral slip or document after the camp?', [
-          'Yes, received written referral','Yes, but only verbal advice',
-          'No referral was needed','I needed one but did not receive it'
-        ], 'q6', true);
-        f += radioQ('Q7', 'Were you referred to another facility for further tests or treatment?', [
-          'Yes, and I went','Yes, but I could not go',
-          'No referral was needed','No referral was given but I needed one'
-        ], 'q7');
-        f += radioQ('Q8', 'If referred but you did not go — what was the main reason?', [
-          'Cost of travel or treatment','Too far to travel',
-          'Had to manage work or family','I felt fine and did not think it was necessary',
-          'No one to accompany me','Not applicable — I did go / was not referred'
-        ], 'q8');
-        f += radioQ('Q9', 'Has the ASHA worker or camp staff followed up with you after the camp?', [
-          'Yes, multiple times','Yes, once',
-          'Not yet but I expect them to','No follow-up at all'
-        ], 'q9');
-        f += radioQ('Q10', 'Did the camp help you get linked to any government scheme?', [
-          'Yes — ABHA card','Yes — PMJAY / state insurance',
-          'Yes — Aadhaar-linked benefits','No scheme linkage was done'
-        ], 'q10');
-        return f;
-      }
-    });
-    all.push({
-      title: 'Health behaviour & satisfaction',
-      id: 'behaviour',
-      html: function(){
-        var f = '<div class="section-label">Behaviour change &amp; feedback</div>';
-        f += radioQ('Q11', 'Since attending the camp, have you made any changes in your daily life?', [
-          'Yes — diet (less salt, oil, sugar)','Yes — started or increased exercise',
-          'Yes — stopped or reduced tobacco / alcohol','No changes yet'
-        ], 'q11');
-        f += radioQ('Q12', 'Before this camp, were you spending money on private doctors for this health problem?', [
-          'Yes, regularly','Yes, occasionally',
-          'No — I was ignoring the problem','No — I had no known problem'
-        ], 'q12');
-        f += radioQ('Q13', 'How much did you spend out of pocket on follow-up tests or medicines after the camp?', [
-          'Nothing — all free','Less than ₹200','₹200–₹500','More than ₹500','Not sure'
-        ], 'q13', true);
-        f += radioQ('Q14', 'How satisfied are you with the overall PRANAA camp experience?', [
-          'Very satisfied','Satisfied','Neutral','Dissatisfied'
-        ], 'q14');
-        f += radioQ('Q15', 'Would you attend another camp and recommend it to others in your village?', [
-          'Yes, definitely — to both','Yes to attending, not sure about recommending',
-          'Not sure','No'
-        ], 'q15');
-        if(selectedType==='community'){
-          f += radioQ('Q16', 'If you were diagnosed with a health condition, did you tell your family or spouse? How did they react?', [
-            'Yes — family was supportive and helped with treatment',
-            'Yes — family knew but did not help much',
-            'Yes — family was worried or resistant',
-            'I did not tell anyone yet',
-            'I was not diagnosed with any condition'
-          ], 'q16', true);
-        }
-        return f;
-      }
-    });
-  }
+  const QUESTIONS = {
+  community: [
+    { id:'C1', text:'How did you come to know about the PRANAA camp?', probe:'Note which channel is most common here.', multi:true,
+      options:['ASHA worker told me directly','Announcement by mike / temple / mosque','PPHF team came to my house','I saw neighbours or family going','Panchayat or village meeting'] },
+    { id:'C2', text:'What made you decide to come to the camp?', probe:'Can select more than one.', multi:true,
+      options:['I had a health problem or symptoms','It was free — no cost to me','I wanted a general check-up','ASHA worker encouraged me strongly','My family / neighbour also came'] },
+    { id:'C3', text:'What tests were done on you at the camp?', probe:'Probe: were you told what each test was for?', multi:true,
+      options:['Blood pressure (BP) check','Blood sugar (diabetes) check','Eye / vision test','Dental / oral cancer check','Cervical or breast cancer screening','HPV test','General body check-up','Other / I do not remember'] },
+    { id:'C4', text:'Were your test results explained to you clearly?', probe:'If no → ask what was missing.',
+      options:['Yes, I understood everything','Mostly yes, a little confusing','No, results were not explained'] },
+    { id:'C5', text:'Was an ABHA health card made for you at the camp?', probe:'If yes → ask if they have used it since.',
+      options:['Yes, for the first time','Yes, updated my existing card','I already had one before the camp','No / I do not know'] },
+    { id:'C6', text:'Did the camp give you a nutrition food kit or healthy food packet?', probe:'Ask: who benefitted most? Pregnant women? Diabetics?', isNew:true, multi:true,
+      options:['Yes — it was very helpful for my family','Yes — but I did not use it much','No food kit was given','I do not remember'] },
+    { id:'C7', text:'After the camp, did your ASHA worker follow up with you?', probe:'If no → what would help?',
+      options:['Yes, she follows up regularly','She contacted me once or twice','No follow-up received','I contacted the ASHA on my own'] },
+    { id:'C8', text:'Were you referred for further check-up or treatment?', probe:'If referred but could not go → what was the barrier?',
+      options:['Yes, and I went to PHC / hospital','Yes, but I could not go (money or distance problem)','Yes, but I have not gone yet','No referral was needed'] },
+    { id:'C9', text:'Has your health improved since the camp?', probe:'Ask for one specific example if yes.',
+      options:['Yes, noticeably better','Somewhat better','About the same','Not sure yet'] },
+    { id:'C10', text:'Are you going to the PHC regularly after the camp?', probe:'If no → what stopped you?',
+      options:['Yes, every month for check-up and medicines','Sometimes (2–3 times since camp)','No, have not gone yet'] },
+    { id:'C11', text:'Since the camp, have you changed anything in your daily life?', probe:'What made you change or not change?', multi:true,
+      options:['Eating less salt, oil, or sugar','Reduced or stopped alcohol drinking','Reduced or stopped tobacco / gutka','Now checking BP or sugar regularly','Started doing some exercise','No changes yet'] },
+    { id:'C12', text:'What did the camp do well?', probe:'Probe for a specific positive moment.', multi:true,
+      options:["Doctors were good and professional",'Tests were free','ASHA worker helped me attend','Staff treated me with respect and care','Camp was close to my home — no travel needed','Privacy was maintained during screening'] },
+    { id:'C13', text:'What should the camp improve or add?', probe:'Why is that the most important change for you?', isNew:true, multi:true,
+      options:['Doctor for leg / joint / bone pain (orthopaedician)','Kidney specialist','Eye specialist or glasses support','Medicines given directly at the camp','Better follow-up after the camp','Privacy for women\'s check-up','Less waiting time'] },
+    { id:'C14', text:'Would you come again if another camp happens in your village?', probe:'If no → why not?',
+      options:['Yes, definitely — and I will bring others too','Yes, I would come again','Not sure','No'] },
+    { id:'C_notes', text:"Interviewer's Notes (open observations / quotes)", probe:'Record any key verbatim quote here.', isNotes:true },
+  ],
 
-  else if(type === 'asha'){
-    all.push({
-      title: 'Community mobilisation',
-      id: 'asha_mob',
-      html: function(){
-        var f = '<div class="section-label">Mobilisation &amp; barriers</div>';
-        f += radioQ('Q1', 'Before PRANAA, how aware were people in your area about BP, blood sugar, and cancer?', [
-          'Very aware','Somewhat aware','Barely aware','Not aware at all'
-        ], 'q1');
-        f += radioQ('Q2', 'What method works best to convince people to attend NCD screening camps?', [
-          'Personal house visits','Community meetings / announcements',
-          'Referral from a trusted neighbour','Involvement of Panchayat / local leaders','All work equally'
-        ], 'q2');
-        f += radioQ('Q3', 'Has PRANAA made it easier for you to mobilise community members for screening?', [
-          'Yes, much easier','Yes, somewhat easier','No change','Made it harder'
-        ], 'q3');
-        f += radioQ('Q4', 'Which group is hardest to convince to come for screening?', [
-          'Working-age men','Women requiring family permission',
-          'Elderly people','People who feel healthy and see no need','Migrants / daily-wage workers'
-        ], 'q4');
-        f += radioQ('Q5', 'When a suspected case is identified, at which step does the care chain most commonly break?', [
-          'At screening — person refuses further tests',
-          'After screening — does not visit PHC',
-          'After PHC — does not go to district hospital',
-          'After diagnosis — does not start treatment',
-          'I have not observed this'
-        ], 'q5', true);
-        return f;
-      }
-    });
-    all.push({
-      title: 'Your role and support',
-      id: 'asha_role',
-      html: function(){
-        var f = '<div class="section-label">Role, workload &amp; support</div>';
-        f += radioQ('Q6', 'What change, if any, have you noticed in people\'s health habits after being diagnosed through PRANAA camps?', [
-          'Yes, many people changed habits','Yes, a few people changed','Rarely','No change observed'
-        ], 'q6', false, true);
-        f += radioQ('Q7', 'How adequate was the training and support you received for your role in PRANAA?', [
-          'Very adequate','Mostly adequate','Somewhat adequate','Not adequate'
-        ], 'q7');
-        f += radioQ('Q8', 'What additional support would most help you?', [
-          'Better incentives / remuneration','More training on NCD counselling',
-          'Transport support for follow-up visits','Digital tools for tracking patients'
-        ], 'q8');
-        f += radioQ('Q9', 'Approximately how much time per week do you spend on PRANAA activities?', [
-          'More than half my time','About a quarter of my time',
-          'Less than a quarter','Varies a lot — no fixed pattern','Cannot estimate'
-        ], 'q9', true);
-        f += radioQ('Q10', 'Have you received any incentives or extra compensation specifically for PRANAA work?', [
-          'Yes, regular incentives','Yes, occasionally',
-          'Recognition only (no financial)','Nothing additional','Not applicable'
-        ], 'q10', true);
-        f += radioQ('Q11', 'Overall, how useful has PRANAA been for your community?', [
-          'Very useful','Useful','Somewhat useful','Not useful','Cannot say'
-        ], 'q11');
-        return f;
-      }
-    });
-  }
+  asha: [
+    { id:'A1', text:'How many PRANAA NCD camps have you been involved in so far?', probe:'How long have you worked with PPHF?',
+      options:['1–2 camps','3–5 camps','6–10 camps','More than 10 camps'] },
+    { id:'A2', text:'What do you tell community members to convince them to come to the camp?', probe:'Which message works best in your area?', multi:true,
+      options:['Free check-up by specialist doctors visiting from the city','No need to travel to Raichur or RIMS','Free medicines and tests available','Free nutrition food kits for families','ABHA health card will be made','Family health is important — check early'] },
+    { id:'A3', text:'Who is the hardest group to bring to the camp?', probe:'Why do you think they resist?',
+      options:['Young men aged 20–40 who think they are healthy','Older women whose families do not give permission','People who fear doctors or injections','Families with financial problems (cannot leave work)','People who live far from the camp location'] },
+    { id:'A4', text:'What new skills or knowledge did you gain through PRANAA?', probe:'Has this changed your daily community work?', multi:true,
+      options:['BP and blood sugar testing','HPV test awareness and counselling','How to maintain an NCD health register','How to counsel families on NCD prevention','Cancer early warning signs','ABHA card enrollment process'] },
+    { id:'A5', text:'Has your workload changed since PRANAA camps started?', probe:'What takes most of your extra time?',
+      options:['Increased a lot — more than doubled','Increased somewhat','About the same as before','Decreased — community is more self-aware now'] },
+    { id:'A6', text:'What support do you receive from PPHF staff during and after camps?', probe:'What more would help you?', multi:true,
+      options:['Help with beneficiary paperwork and forms','Training on new health topics','Guidance and supervision during the camp','Follow-up calls and reminders','No additional support beyond the camp day'] },
+    { id:'A7', text:'Since PRANAA camps, how many more people in your area check their BP and sugar regularly?', probe:'Can you give a rough number or estimate?',
+      options:['Many more — significant increase in awareness','A little more than before','About the same','Not much change observed'] },
+    { id:'A8', text:'Do you now maintain an NCD health register for your community?', probe:'If yes — how has it helped your DHO health surveys?',
+      options:['Yes, started after PRANAA training','Yes, was doing it before PRANAA too','No, but I plan to start','No'] },
+    { id:'A9', text:'After a camp, what percentage of people do you estimate come to PHC regularly?', probe:'What stops the rest from coming?',
+      options:['More than 75% come regularly','50–75%','25–50%','Less than 25%'] },
+    { id:'A10', text:'What is the biggest challenge you face after a camp is done?', probe:'How do you handle this challenge now?',
+      options:['Getting people to follow up at PHC for treatment','Convincing women to do HPV / cancer screening','Getting young men to attend at all','Families not allowing women to go without escort','Transport / distance for referral patients to reach RIMS or district hospital'] },
+    { id:'A11', text:'Did the nutrition food kits distributed at camps make a difference to families?', probe:'Any specific family story you remember?', isNew:true,
+      options:['Yes — very helpful, especially for pregnant women and diabetic patients','Somewhat helpful for some families','Impact not clearly visible yet','Nutrition kits were not distributed in camps I was involved in'] },
+    { id:'A12', text:'What one thing would most improve PRANAA\'s impact in your area?', probe:'Why that change above others?',
+      options:['Monthly camps instead of occasional ones','More specialist doctors (bone, kidney, eye) at camps','Transport support for patients referred to RIMS','More training for ASHA workers','PPHF staff helping during follow-up home visits'] },
+    { id:'A_notes', text:"Interviewer's Notes (open observations / quotes)", probe:'Record any key verbatim quote here.', isNotes:true },
+  ],
 
-  else if(type === 'teacher'){
-    all.push({
-      title: 'School programme activities',
-      id: 'teacher_act',
-      html: function(){
-        var f = '<div class="section-label">School activities</div>';
-        f += checkQ('Q1', 'What types of PRANAA activities were conducted in your school?', [
-          'Health awareness sessions','Health day celebrations / competitions',
-          'Printed materials / posters','Student health quizzes or activities','All of the above'
-        ], 'q1');
-        f += radioQ('Q2', 'How relevant and age-appropriate were the NCD awareness sessions for your students?', [
-          'Very relevant and age-appropriate','Mostly appropriate',
-          'Somewhat appropriate','Not appropriate'
-        ], 'q2');
-        f += radioQ('Q3', 'How engaged were students during the PRANAA health sessions?', [
-          'Very engaged and participative','Mostly engaged','Partially engaged','Not engaged'
-        ], 'q3');
-        f += radioQ('Q4', 'After PRANAA sessions, what change was most noticeable in students?', [
-          'Better knowledge about diet and sugar','Increased awareness of tobacco risks',
-          'Greater interest in physical activity','Awareness of BP / diabetes risk in family',
-          'No noticeable change'
-        ], 'q4');
-        f += radioQ('Q5', 'Have students carried health messages home to their parents or families?', [
-          'Yes, many students','Yes, some students','Rarely','Not observed'
-        ], 'q5', true);
-        return f;
-      }
-    });
-    all.push({
-      title: 'Impact and sustainability',
-      id: 'teacher_impact',
-      html: function(){
-        var f = '<div class="section-label">Impact &amp; future</div>';
-        f += radioQ('Q6', 'Are you aware of any parents who attended a PRANAA screening camp because of their child\'s encouragement?', [
-          'Yes, several parents','Yes, one or two parents','Not that I know of','No'
-        ], 'q6');
-        f += radioQ('Q7', 'Have school practices changed as a result of PRANAA?', [
-          'Yes — increased sports time or health messaging',
-          'Yes — healthier mid-day meal practices','Minimal change','No change'
-        ], 'q7');
-        f += radioQ('Q8', 'Have you received resource materials (posters, videos, booklets) to continue health education independently?', [
-          'Yes — comprehensive materials received','Yes — some, but insufficient',
-          'Very little provided','Nothing received'
-        ], 'q8', true);
-        f += radioQ('Q9', 'How sustainable is NCD health education in your school without external support?', [
-          'Fully sustainable','Sustainable with minor support',
-          'Needs significant ongoing support','Not sustainable without external support'
-        ], 'q9');
-        f += radioQ('Q10', 'What would make school-based NCD sessions most effective going forward?', [
-          'More interactive activities (games, quizzes)','Involving parents directly in sessions',
-          'Regular sessions rather than one-time events','Integration into the school curriculum'
-        ], 'q10');
-        return f;
-      }
-    });
-  }
+  nurse: [
+    { id:'N1', text:'What was your role during PRANAA NCD screening camps?', probe:'How were you prepared for this role?', multi:true,
+      options:['Registration of patients','BP and blood sugar testing','HPV testing / cervical screening','Patient counselling','Record keeping and NCD register maintenance','Coordinating referrals'] },
+    { id:'N2', text:'What training did you receive from PRANAA?', probe:'Was training adequate for field work?', multi:true,
+      options:['BP and blood sugar screening protocol','HPV test procedure (online or in-person training)','NCD patient counselling skills','ABHA card enrollment and digital tools','Cancer awareness and early detection signs','No formal training received'] },
+    { id:'N3', text:'Has patient attendance at your PHC changed since PRANAA camps started?', probe:'What condition are most new patients coming for?',
+      options:['Yes — significantly more, doubled or more','Yes — moderately more patients','Slightly more','No visible change'] },
+    { id:'N4', text:'What equipment or materials did PRANAA provide to your PHC or camp?', probe:'Which resource has been most useful?', multi:true,
+      options:['BP machines and glucometers','HPV test kits','Nutrition food kits for patients','Informational health boards and posters','Digital tools or NCD registers','Nothing was provided at my location'] },
+    { id:'N5', text:'Did women find it comfortable to attend and get screened at the camp?', probe:'What helped women feel more at ease?',
+      options:['Yes — most women were comfortable throughout','Some hesitated at first but opened up with encouragement','Many women were reluctant — privacy was a concern','Women needed a lot of ASHA support to stay'] },
+    { id:'N6', text:'What conditions are most commonly found in your camp catchment area?', probe:'Which is most common and most neglected?', multi:true,
+      options:['Hypertension (high BP)','Diabetes (high sugar)','Cervical or breast cancer (early signs)','Oral cancer','Kidney problems or kidney stones','TB / Leprosy','Eye problems or cataracts','Joint / bone pain (orthopaedic need)'] },
+    { id:'N7', text:'What percentage of people referred from camp came to PHC for follow-up? (estimate)', probe:'Why do some not follow up?',
+      options:['More than 80%','50–80%','25–50%','Less than 25%','I do not know'] },
+    { id:'N8', text:'Which specialist doctors are most urgently needed at future camps?', probe:'Which specialist gap causes the most patient distress?', isNew:true, multi:true,
+      options:['Orthopaedician (joint / leg / bone pain)','Kidney specialist (nephrologist)','Eye specialist (ophthalmologist)','More gynaecologists','ENT specialist','Paediatrician for children','Dermatologist'] },
+    { id:'N9', text:'Have the informational health boards and nutrition kits been effective?', probe:'Which material is most noticed by patients?',
+      options:['Yes — patients engage with them and ask questions','Somewhat — some patients find them useful','Not very effective in our setting','We have not received these materials'] },
+    { id:'N10', text:'What is the biggest barrier for patients completing referral and treatment?', probe:'What could PPHF or government do to reduce this?',
+      options:['Distance to RIMS or district hospital','Financial problems','Fear or lack of trust in hospital treatment','No family support to travel','Too many procedures / paperwork at district hospital'] },
+    { id:'N11', text:'Has PRANAA helped integrate ABHA card registration into routine PHC work?', probe:'How has ABHA helped patients so far?',
+      options:['Yes — now a standard step at our PHC','Cards are made at camps but not yet at PHC','Only partially integrated into routine work','Not integrated yet'] },
+    { id:'N12', text:'What additional support would most improve your ability to serve patients?', probe:'Why is that the priority for your area?', isNew:true,
+      options:['Monthly camps instead of one-time events','More specialist doctors at each camp','Transport support for referred patients','More medicines available at PHC','More staff / reduced workload at PHC'] },
+    { id:'N_notes', text:"Interviewer's Notes (open observations / quotes)", probe:'Record any key verbatim quote here.', isNotes:true },
+  ],
 
-  else if(type === 'panchayat'){
-    all.push({
-      title: 'Community & Panchayat involvement',
-      id: 'pan_inv',
-      html: function(){
-        var f = '<div class="section-label">Village participation</div>';
-        f += radioQ('Q1', 'How serious was the NCD problem in your village before PRANAA?', [
-          'Very serious — major health burden','Serious — common but unaddressed',
-          'Moderate — some awareness existed','Not considered a major problem','Don\'t know'
-        ], 'q1');
-        f += checkQ('Q2', 'How was the Panchayat involved in organising PRANAA camps?', [
-          'Provided venue and made announcements',
-          'Mobilised community leaders and helped with outreach',
-          'Supported linkage to government schemes',
-          'Helped identify non-participants',
-          'Not involved'
-        ], 'q2');
-        f += radioQ('Q3', 'How did the community generally receive the PRANAA NCD screening camps?', [
-          'Very positively — high participation','Positively — moderate participation',
-          'Mixed response','Mostly with hesitation or scepticism'
-        ], 'q3');
-        f += radioQ('Q4', 'Which group had the lowest participation in PRANAA camps?', [
-          'Working-age men','Women in conservative families',
-          'People in remote hamlets','Migrant or seasonal labourers',
-          'All participated roughly equally'
-        ], 'q4');
-        f += radioQ('Q5', 'What health-seeking behaviour change, if any, have you observed in the village since PRANAA?', [
-          'More people visiting the PHC voluntarily','Increased awareness of NCD symptoms',
-          'Reduction in tobacco use','Better medicine adherence among diagnosed patients',
-          'No visible change'
-        ], 'q5', false, true);
-        return f;
-      }
-    });
-    all.push({
-      title: 'Feedback & sustainability',
-      id: 'pan_sus',
-      html: function(){
-        var f = '<div class="section-label">Feedback &amp; future</div>';
-        f += radioQ('Q6', 'What do most villagers say about the quality of PRANAA camp services?', [
-          'Very satisfied','Satisfied','Mixed — some complaints about follow-up','Mostly dissatisfied'
-        ], 'q6');
-        f += radioQ('Q7', 'What is the most common complaint from villagers about PRANAA or follow-up care?', [
-          'Long distance to referred hospital','Cost of medicines or tests',
-          'No one to help with follow-up','Lack of information after screening'
-        ], 'q7');
-        f += radioQ('Q8', 'Has the Panchayat played any role in supporting diagnosed patients after screening?', [
-          'Yes — actively helped multiple patients','Yes — helped a few on request',
-          'Rarely — only when specifically asked','No — not seen as Panchayat\'s role'
-        ], 'q8', true);
-        f += radioQ('Q9', 'What external support is most needed to sustain NCD activities after PRANAA ends?', [
-          'Continued health camps by government',
-          'Better referral transport and cost support',
-          'Regular ASHA follow-up with diagnosed patients',
-          'State funding for PHC equipment and medicines'
-        ], 'q9');
-        f += radioQ('Q10', 'Overall, how useful has PRANAA been for your village?', [
-          'Very useful','Useful','Somewhat useful','Not useful','Cannot say'
-        ], 'q10');
-        return f;
-      }
-    });
-  }
+  doctor: [
+    { id:'D1', text:'What is your role in PRANAA camps?', probe:'How many camps have you attended in total?',
+      options:['PHC Medical Officer — organising and overseeing','Visiting specialist doctor (gynaecologist, dentist, eye, etc.)','General physician conducting screenings','Both clinical and organisational role'] },
+    { id:'D2', text:'How many PRANAA NCD camps have you attended or supported?', probe:'What was the scale of each camp?',
+      options:['1–2 camps','3–5 camps','6–10 camps','More than 10 camps'] },
+    { id:'D3', text:'What types of screening did you conduct at the camps?', probe:'Which screening found the most positive cases?', multi:true,
+      options:['Hypertension (BP) and diabetes','Cervical cancer (VIA / HPV screening)','Breast cancer examination','Oral cancer / dental screening','Eye check-up and cataract detection','General medical assessment','Orthopaedic / joint assessment'] },
+    { id:'D4', text:'Approximately how many patients did you screen per camp on average?', probe:'What limited the number screened?',
+      options:['Fewer than 20','20–50','50–100','More than 100'] },
+    { id:'D5', text:'What percentage of those screened required referral for further treatment?', probe:'What were the main referred conditions?',
+      options:['Less than 10%','10–30%','30–50%','More than 50%'] },
+    { id:'D6', text:'Were referred patients actually able to reach the district hospital or RIMS?', probe:'What is the single biggest barrier to follow-up?',
+      options:['Most patients followed up successfully','About half followed up','Few patients followed through — cost and distance were barriers','Almost no one followed up after referral','I do not know'] },
+    { id:'D7', text:'Were the camps well organised and sufficiently equipped?', probe:'What was the biggest organisational gap?',
+      options:['Yes — very well organised','Mostly organised with minor gaps','Adequate but significant improvements needed','Poorly organised'] },
+    { id:'D8', text:'What infrastructure or equipment is most urgently missing at camp level?', probe:'Has this gap caused any patient care problem?', isNew:true, multi:true,
+      options:['Private screening space for women (curtains / screens)','More specialist instruments','On-site medicine dispensing','Better referral documentation system','Digital tools for recording results'] },
+    { id:'D9', text:'Has PRANAA been effective in reaching people who would not normally come to hospital?', probe:'What type of patient came for the first time?',
+      options:['Very effective — many first-time patients came','Somewhat effective','Marginally effective','Not effective'] },
+    { id:'D10', text:'What health conditions are most prevalent and neglected in your camp area?', probe:'What condition surprised you most?', multi:true,
+      options:['Hypertension and diabetes (widespread and unmanaged)','Cervical, breast, or oral cancer (mostly early stage)','Eye problems and cataracts','Joint, bone, and kidney problems','TB / leprosy / malaria'] },
+    { id:'D11', text:'Were the nutrition food kits distributed at camps beneficial?', probe:'Which patient group benefitted most from kits?', isNew:true,
+      options:['Yes — very beneficial especially for poor and pregnant patients','Somewhat beneficial for some families','Kits were not available at camps I attended','I did not observe the kits'] },
+    { id:'D12', text:'What would make PRANAA camps more clinically effective?', probe:'Prioritise one change if you could only choose one.', multi:true,
+      options:['More specialist doctors per camp (bone, eye, kidney)','Better diagnostic equipment on-site','Follow-up protocol built into the camp process','Telemedicine link for complex cases','More frequent camps — monthly at minimum'] },
+    { id:'D_notes', text:"Interviewer's Notes (open observations / quotes)", probe:'Record any key verbatim quote here.', isNotes:true },
+  ],
 
-  else if(type === 'nurse'){
-    all.push({
-      title: 'Screening quality & equipment',
-      id: 'nurse_q',
-      html: function(){
-        var f = '<div class="section-label">Clinical screening</div>';
-        f += radioQ('Q1', 'How has PRANAA changed the way NCD screening is conducted at camps?', [
-          'Significantly improved the process','Moderately improved',
-          'Slightly improved','No change','Process worsened'
-        ], 'q1', false, true);
-        f += radioQ('Q2', 'What is the most common undetected condition you find at PRANAA camps?', [
-          'Undetected hypertension','Undetected diabetes / pre-diabetes',
-          'Obesity / high BMI','Suspected cancer (oral, cervical, breast)','Anaemia'
-        ], 'q2');
-        f += radioQ('Q3', 'Are equipment and supplies adequate at camp sites?', [
-          'Always adequate','Usually adequate','Sometimes inadequate','Often inadequate'
-        ], 'q3');
-        f += radioQ('Q4', 'Do you feel adequately trained for specialised cancer screenings (VIA, breast, oral)?', [
-          'Yes, fully trained and confident','Mostly trained','Partially trained',
-          'Not adequately trained','Not trained for cancer screening'
-        ], 'q4');
-        f += radioQ('Q5', 'Are you able to perform VIA, clinical breast exam, and oral cancer screening independently?', [
-          'Yes — all three independently','Yes — two of three',
-          'Only one — need support for others','No — need supervision for all',
-          'Not trained for cancer screening'
-        ], 'q5', true);
-        return f;
-      }
-    });
-    all.push({
-      title: 'Referral, follow-up & workload',
-      id: 'nurse_ref',
-      html: function(){
-        var f = '<div class="section-label">Referral &amp; workload</div>';
-        f += radioQ('Q6', 'How effective is the referral system for patients needing higher-level care?', [
-          'Very effective','Mostly effective','Partially effective','Not effective'
-        ], 'q6');
-        f += radioQ('Q7', 'What proportion of patients referred from camps actually complete their referral?', [
-          'More than 70%','50–70%','30–50%','Less than 30%','Don\'t have this data'
-        ], 'q7', false, true);
-        f += radioQ('Q8', 'How effective are digital tools in recording and tracking patient data at camps?', [
-          'Very effective','Mostly effective','Somewhat effective',
-          'Not effective','Not in use at our facility'
-        ], 'q8');
-        f += radioQ('Q9', 'How has PRANAA affected your overall workload?', [
-          'Significantly increased but manageable','Moderately increased and manageable',
-          'Unmanageable increase','No significant change'
-        ], 'q9');
-        f += radioQ('Q10', 'How confident are you in counselling a newly diagnosed patient on treatment adherence and lifestyle?', [
-          'Very confident','Mostly confident','Somewhat confident — need more practice',
-          'Not confident','Not part of my role'
-        ], 'q10', true);
-        f += radioQ('Q11', 'What improvement would most enhance the quality of NCD screening?', [
-          'More equipment and supplies','Better-designed referral and follow-up system',
-          'Additional staff at camps','Improved digital documentation tools'
-        ], 'q11');
-        return f;
-      }
-    });
-  }
+  govt: [
+    { id:'G1', text:'In what capacity are you involved with or aware of PRANAA?', probe:'How long have you been in your role?',
+      options:['Chief Health Officer (CHO) — block level','District Health Officer (DHO) — district level','Health Inspector / Health Information Officer','Gram Panchayat / PRI Representative'] },
+    { id:'G2', text:"How has PRANAA complemented the government's NP-NCD programme at your level?", probe:'Which gap did PRANAA fill best?',
+      options:['Significantly strengthened it — many more camps and coverage','Moderately helped fill existing gaps','Slightly helped','Not much change observed from PRANAA alone'] },
+    { id:'G3', text:'Has PHC attendance in your area increased since PRANAA camps started?', probe:'Can you provide numbers or data?',
+      options:['Yes — significantly, doubled or more','Yes — moderately increased','Slightly increased','No visible change'] },
+    { id:'G4', text:'Has PRANAA contributed to ABHA card registration and scheme linkage (Ayushman Bharat)?', probe:'How have ABHA cards helped beneficiaries in your area?',
+      options:['Yes — very effectively integrated','Somewhat — partial linkage achieved','Minimally observed','Not observed'] },
+    { id:'G5', text:'Has community NCD awareness changed in measurable ways?', probe:'What evidence or example do you have?',
+      options:['Yes — visible behaviour change (more self-care, reduced alcohol/tobacco)','Some increase in awareness — people asking more health questions','Little observable change','No visible change yet'] },
+    { id:'G6', text:'What equipment or infrastructure has PRANAA added to PHCs or camps in your area?', probe:'Has this equipment been maintained and used?', multi:true,
+      options:['BP machines and glucometers for PHC','HPV test kits and gynaecology equipment','Health boards and IEC awareness materials','Digital recording tools or NCD registers','Nothing observed at facilities I oversee'] },
+    { id:'G7', text:'What are the biggest remaining gaps in NCD care in your area?', probe:'What would the government need to do to close these gaps?', multi:true,
+      options:['Shortage of specialist doctors (ortho, kidney, ENT, eye)','Poor follow-up after referral to district hospital','Financial barriers preventing treatment completion','Distance to RIMS or district hospital','Shortage of medicines at PHC level'] },
+    { id:'G8', text:'Does government machinery coordinate smoothly with PRANAA?', probe:'Where is friction most felt?',
+      options:['Very smoothly — fully integrated with government systems','Mostly smooth with minor friction','Some coordination gaps','Poorly coordinated'] },
+    { id:'G9', text:'Should PRANAA camps become a regular monthly feature in your area?', probe:'What would monthly camps require from the government side?',
+      options:['Yes — monthly camps are essential','Yes — but quarterly may be sufficient','Need to review data first','No — current frequency is adequate'] },
+    { id:'G10', text:'Are PRANAA results reflected in official district NCD data or health reports?', probe:'How could data sharing be improved?',
+      options:['Yes — clearly reflected in district data','Partially — some data is captured','Not yet — data integration is a gap','I do not know'] },
+    { id:'G11', text:"What is needed to sustain PRANAA's impact after the project period ends?", probe:'Which of these is most achievable in the short term?', multi:true,
+      options:['Government funding for regular camps','More specialists empanelled at PHC','Stronger ASHA worker capacity building','Community health education integrated into NP-NCD','Policy integration at state level (Karnataka NCD programme)'] },
+    { id:'G12', text:'What recommendation would you make to scale PRANAA to other districts in Karnataka?', probe:'What would be your first priority step?', isNew:true,
+      options:['Monthly specialist camps with government-NGO co-funding','Stronger district-NGO data sharing protocols','School-based and community NCD awareness campaigns','Integrate with Ayushman Bharat enrollment drives','Appoint a dedicated district-level PRANAA coordination officer'] },
+    { id:'G_notes', text:"Interviewer's Notes (open observations / quotes)", probe:'Record any key verbatim quote here.', isNotes:true },
+  ]
+};
 
-  else if(type === 'doctor'){
-    all.push({
-      title: 'PHC performance & integration',
-      id: 'doc_q',
-      html: function(){
-        var f = '<div class="section-label">PHC performance</div>';
-        f += radioQ('Q1', 'How would you describe the NCD situation in your PHC catchment area before PRANAA started?', [
-          'Very poor — almost no screening or detection',
-          'Poor — limited screening, many gaps',
-          'Moderate — some screening but inconsistent',
-          'Good — regular screening was happening'
-        ], 'q1');
-        f += radioQ('Q2', 'What change, if any, has NCD screening coverage shown at your PHC since PRANAA began?', [
-          'Significantly increased','Moderately increased',
-          'Slightly increased','No change','Decreased / Difficult to say'
-        ], 'q2', false, true);
-        f += radioQ('Q3', 'How effective is PRANAA\'s referral and follow-up mechanism?', [
-          'Very effective','Mostly effective','Somewhat effective','Not effective','Don\'t know'
-        ], 'q3');
-        f += radioQ('Q4', 'Where do patients most commonly drop off in the care chain?', [
-          'After screening (don\'t come to PHC)','After PHC (don\'t go to district hospital)',
-          'After diagnosis (don\'t start treatment)','After treatment start (don\'t continue)',
-          'Not observed / Don\'t know'
-        ], 'q4');
-        f += radioQ('Q5', 'How smoothly has PRANAA integrated with the existing NP-NCD programme?', [
-          'Very smoothly','Mostly smoothly','With some friction','Poorly integrated','Don\'t know'
-        ], 'q5');
-        return f;
-      }
-    });
-    all.push({
-      title: 'Training, equipment & sustainability',
-      id: 'doc_sus',
-      html: function(){
-        var f = '<div class="section-label">Capacity &amp; sustainability</div>';
-        f += radioQ('Q6', 'Has PRANAA supported staff training or upskilling at your PHC?', [
-          'Yes, extensively','Yes, to some extent','Minimally','Not at all'
-        ], 'q6');
-        f += radioQ('Q7', 'Has PRANAA improved availability of equipment and consumables at your PHC?', [
-          'Yes, significantly','Yes, moderately','Minimal improvement','No improvement'
-        ], 'q7');
-        f += radioQ('Q8', 'How well has PRANAA facilitated linkage to government schemes like ABHA and PMJAY?', [
-          'Very well — most eligible patients linked','Moderately — some patients linked',
-          'Partially — few linked','Not at all','Don\'t know'
-        ], 'q8');
-        f += radioQ('Q9', 'How sustainable are PRANAA\'s activities within government resources after the project ends?', [
-          'Fully sustainable','Mostly sustainable','Partially sustainable',
-          'Not sustainable without external support','Too early to say'
-        ], 'q9');
-        f += radioQ('Q10', 'What was the biggest challenge in implementing PRANAA at your PHC?', [
-          'Resolved fully','Partially resolved','Still ongoing','No major challenge faced'
-        ], 'q10', true);
-        f += radioQ('Q11', 'Which PRANAA input has been most valuable for your PHC?', [
-          'Community mobilization','Staff training',
-          'Equipment & consumables','Digital documentation tools','All equally valuable'
-        ], 'q11');
-        return f;
-      }
-    });
-  }
-
-  // ── FINAL SECTION: Open-ended ────────────────────────────────────────
-  all.push({
-    title: 'Your experience in your own words',
-    id: 'open',
-    html: function(){
-      var f = '<div class="section-label">Open-ended feedback</div>';
-      f += '<p class="desc">These are the most important questions. Please share as much or as little as you are comfortable with. There are no right or wrong answers.</p>';
-      f += openQ('O1', 'What is the most important change you have seen because of PRANAA?', 'open_o1');
-      f += openQ('O2', 'Can you describe one situation where PRANAA helped someone — or where it failed to help someone? What happened?', 'open_o2');
-      f += openQ('O3', 'What problems still remain that PRANAA did not solve?', 'open_o3');
-      f += openQ('O4', 'What is the one thing you would change or improve about PRANAA?', 'open_o4');
-      f += openQ('O5', 'Is there anything else you want us to know?', 'open_o5', false);
-      return f;
+  const DETAIL_RULES = {
+    community_C4: {
+      cases: [
+        { includes: ['Mostly yes, a little confusing', 'No, results were not explained'], label: 'What was unclear or missing in the explanation?' }
+      ]
+    },
+    community_C6: {
+      cases: [
+        { includes: ['Yes — it was very helpful for my family', 'Yes — but I did not use it much'], label: 'Who used the kit and how was it used?' },
+        { includes: ['No food kit was given'], label: 'Confirm: did the camp the respondent attended include kit distribution?' }
+      ]
+    },
+    community_C7: {
+      cases: [
+        { includes: ['No follow-up received', 'I contacted the ASHA on my own'], label: 'Describe the follow-up gap or what the respondent had to do on their own.' }
+      ]
+    },
+    community_C8: {
+      cases: [
+        { includes: ['Yes, and I went to PHC / hospital'], label: 'Where did the respondent go, and what happened next?' },
+        { includes: ['Yes, but I could not go (money or distance problem)', 'Yes, but I have not gone yet'], label: 'What stopped the respondent from completing the referral?' },
+        { includes: ['No referral was needed'], label: 'Confirm there were no suspected findings that should have triggered referral.' }
+      ]
+    },
+    community_C9: {
+      cases: [
+        { includes: ['Yes, noticeably better', 'Somewhat better'], label: 'Give one concrete example of improvement (symptom, test value, or behaviour).' },
+        { includes: ['About the same', 'Not sure yet'], label: 'Why is there no clear improvement yet? (barrier, non-adherence, or too early to tell?)' }
+      ]
+    },
+    community_C10: {
+      cases: [
+        { includes: ['No, have not gone yet'], label: 'What is the specific reason the respondent has not visited PHC after the camp?' }
+      ]
+    },
+    community_C11: {
+      cases: [
+        { includes: ['No changes yet'], label: 'Why no change? (Did not feel the need? Could not afford? No support at home?)' }
+      ]
+    },
+    asha_A3: {
+      cases: [
+        { includes: ['Somewhat difficult', 'Very difficult'], label: 'What are the main barriers to mobilisation?' }
+      ]
+    },
+    asha_A7: {
+      cases: [
+        { includes: ['Partly sufficient', 'Not sufficient'], label: 'Which support is missing most?' }
+      ]
+    },
+    asha_A9: {
+      cases: [
+        { includes: ['25–50%', 'Less than 25%'], label: 'What are the main reasons people are not returning to PHC after the camp?' }
+      ]
+    },
+    asha_A11: {
+      cases: [
+        { includes: ['Nutrition kits were not distributed in camps I was involved in'], label: 'Confirm: was kit distribution not part of any camps this ASHA attended, or stopped at some point?' },
+        { includes: ['Yes — very helpful, especially for pregnant women and diabetic patients', 'Somewhat helpful for some families'], label: 'Give one specific family story or example of how the kit was used.' }
+      ]
+    },
+    nurse_N5: {
+      cases: [
+        { includes: ['Some barriers remain', 'Referral completion is poor'], label: 'What are the main reasons referrals are not completed?' }
+      ]
+    },
+    nurse_N7: {
+      cases: [
+        { includes: ['25–50%', 'Less than 25%'], label: 'What barriers stop patients from following up at PHC?' }
+      ]
+    },
+    doctor_D5: {
+      cases: [
+        { includes: ['Moderate compliance — roughly half follow through', 'Low compliance — most do not complete referrals'], label: 'Why are patients failing to complete the referral pathway?' }
+      ]
+    },
+    doctor_D6: {
+      cases: [
+        { includes: ['Few patients followed through — cost and distance were barriers', 'Almost no one followed up after referral'], label: 'What is the single biggest barrier stopping patients from reaching RIMS or the district hospital?' }
+      ]
+    },
+    govt_G8: {
+      cases: [
+        { includes: ['Some coordination gaps', 'Poorly coordinated'], label: 'Describe the coordination gap or friction point between PRANAA and government machinery.' }
+      ]
+    },
+    govt_G10: {
+      cases: [
+        { includes: ['Not yet — data integration is a gap', 'I do not know'], label: 'What would be needed to get PRANAA results reflected in official district NCD reports?' }
+      ]
     }
-  });
+  };
 
-  return all;
-}
+  const EXCLUSIVE_PATTERNS = [
+    /^None\b/i,
+    /^None\s*\/\s*Not sure$/i,
+    /^Cannot recall$/i,
+    /^I do not remember$/i,
+    /^Other\s*\/\s*I do not remember$/i,
+    /^No changes yet$/i,
+    /^Nothing observed/i,
+    /^Camp kits were not available/i
+  ];
 
-// ── HTML helpers ──────────────────────────────────────────────────────────────
-
-function field(label, type, id, required, options, placeholder){
-  var r = required ? '<span class="required">*</span>' : '';
-  var html = '<div class="q-block"><label class="field-label" for="' + id + '">' + label + r + '</label>';
-  if(type === 'select'){
-    html += '<select id="' + id + '" name="' + id + '">';
-    html += '<option value="">— Select —</option>';
-    (options || []).forEach(function(o){ html += '<option>' + o + '</option>'; });
-    html += '</select>';
-  } else {
-    html += '<input type="' + type + '" id="' + id + '" name="' + id + '" placeholder="' + (placeholder || '') + '">';
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
   }
-  html += '</div>';
-  return html;
-}
 
-function twoCol(a, b){
-  return '<div class="field-row">' + a + b + '</div>';
-}
+  function todayISO() {
+    const d = new Date();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${d.getFullYear()}-${m}-${day}`;
+  }
 
-function radioQ(num, question, options, id, isNew, isUpdated){
-  var badge = isNew ? '<span class="new-badge">&#9733; New</span>' : (isUpdated ? '<span class="new-badge" style="background:#fce4ec;color:#880e4f">&#9998; Updated</span>' : '');
-  var html = '<div class="q-block">';
-  html += '<span class="q-num">Q' + num + '</span>' + badge;
-  html += '<h3>' + question + ' <span style="font-size:.75rem;color:var(--muted);font-weight:400">(you can select more than one)</span></h3>';
-  html += '<div class="check-group">';
-  options.forEach(function(opt){
-    html += '<label onclick="toggleCheck(this)">';
-    html += '<input type="checkbox" name="' + id + '" value="' + opt + '"> ' + opt;
-    html += '</label>';
-  });
-  html += '</div></div>';
-  return html;
-}
+  function debounce(fn, wait) {
+    let t;
+    return (...args) => {
+      clearTimeout(t);
+      t = setTimeout(() => fn(...args), wait);
+    };
+  }
 
-function checkQ(num, question, options, id, isNew){
-  var badge = isNew ? '<span class="new-badge">&#9733; New</span>' : '';
-  var html = '<div class="q-block">';
-  html += '<span class="q-num">Q' + num + '</span>' + badge;
-  html += '<h3>' + question + ' <span style="font-size:.75rem;color:var(--muted);font-weight:400">(tick all that apply)</span></h3>';
-  html += '<div class="check-group">';
-  options.forEach(function(opt){
-    html += '<label onclick="toggleCheck(this)">';
-    html += '<input type="checkbox" name="' + id + '" value="' + opt + '"> ' + opt;
-    html += '</label>';
-  });
-  html += '</div></div>';
-  return html;
-}
+  function queueKey() {
+    return APP_CONFIG.QUEUE_KEY;
+  }
 
-function openQ(num, question, id, required){
-  var r = (required !== false) ? '<span class="required">*</span>' : '';
-  return '<div class="q-block">' +
-    '<span class="q-num">O' + num.toString().replace('O','') + '</span>' +
-    '<h3>' + question + r + '</h3>' +
-    '<textarea id="' + id + '" name="' + id + '" placeholder="Write your answer here..."></textarea>' +
-    '</div>';
-}
+  function getQueue() {
+    try {
+      return JSON.parse(localStorage.getItem(queueKey()) || '[]');
+    } catch {
+      return [];
+    }
+  }
 
-function selectRadio(el){
-  var group = el.closest('.radio-group');
-  group.querySelectorAll('label').forEach(function(l){ l.classList.remove('selected'); });
-  el.classList.add('selected');
-  el.querySelector('input').checked = true;
-}
+  function setQueue(queue) {
+    localStorage.setItem(queueKey(), JSON.stringify(queue));
+    updateQueueNotice();
+  }
 
-function toggleCheck(el){
-  el.classList.toggle('selected', el.querySelector('input').checked);
-}
+  function addToQueue(payload, reason) {
+    const queue = getQueue();
+    queue.push({
+      queuedAt: new Date().toISOString(),
+      reason,
+      payload
+    });
+    setQueue(queue);
+  }
 
-// ── Navigation ────────────────────────────────────────────────────────────────
+  function draftKey(role) {
+    return APP_CONFIG.DRAFT_PREFIX + role;
+  }
 
-function renderSection(){
-  var sec = sections[currentSection];
-  var total = sections.length;
-  var pct = Math.round(((currentSection + 1) / (total + 1)) * 100);
+  function setActiveRole(role) {
+    localStorage.setItem(APP_CONFIG.ACTIVE_ROLE_KEY, role);
+  }
 
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressLabel').textContent = 'Step ' + (currentSection + 1) + ' of ' + total;
+  function getActiveRole() {
+    return localStorage.getItem(APP_CONFIG.ACTIVE_ROLE_KEY) || 'community';
+  }
 
-  var html = '<div class="card">';
-  html += '<h2>' + sec.title + '</h2>';
-  html += sec.html();
-  html += '</div>';
-  document.getElementById('form-sections').innerHTML = html;
+  function isExclusiveOption(text) {
+    return EXCLUSIVE_PATTERNS.some((pattern) => pattern.test(text));
+  }
 
-  document.getElementById('btn-prev').style.display = currentSection > 0 ? 'inline-flex' : 'none';
-  var isLast = currentSection === sections.length - 1;
-  document.getElementById('btn-next').style.display   = isLast ? 'none' : 'inline-flex';
-  document.getElementById('btn-submit').style.display = isLast ? 'inline-flex' : 'none';
+  function renderField(field) {
+    const id = `field_${field.name}`;
+    const req = field.required ? '<span class="req">*</span>' : '';
+    const attrs = [
+      `id="${id}"`,
+      `name="${field.name}"`,
+      field.required ? 'required' : '',
+      field.placeholder ? `placeholder="${escapeHtml(field.placeholder)}"` : '',
+      field.min !== undefined ? `min="${field.min}"` : '',
+      field.max !== undefined ? `max="${field.max}"` : '',
+      field.step ? `step="${field.step}"` : ''
+    ].filter(Boolean).join(' ');
 
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
-function collectCurrentSection(){
-  document.querySelectorAll('input[type=text], input[type=number], input[type=email], input[type=tel], select, textarea').forEach(function(el){
-    if(el.id) responses[el.id] = el.value;
-  });
-  document.querySelectorAll('input[type=checkbox]').forEach(function(el){
-    if(el.checked){
-      if(responses[el.name]){
-        responses[el.name] = responses[el.name] + ' | ' + el.value;
-      } else {
-        responses[el.name] = el.value;
-      }
+    let control = '';
+    if (field.type === 'select') {
+      control = `<select ${attrs}>${field.options.map((opt) => `<option value="${escapeHtml(opt)}">${opt ? escapeHtml(opt) : 'Select'}</option>`).join('')}</select>`;
+    } else if (field.type === 'textarea') {
+      control = `<textarea ${attrs}></textarea>`;
     } else {
-      if(!responses[el.name]) responses[el.name] = '';
+      control = `<input type="${field.type}" ${attrs}>`;
     }
-  });
-}
 
-function nextSection(){
-  collectCurrentSection();
-  currentSection++;
-  renderSection();
-}
-
-function prevSection(){
-  if(currentSection > 0){
-    collectCurrentSection();
-    currentSection--;
-    renderSection();
+    return `
+      <div class="field ${field.full ? 'full' : ''}" data-field="${field.name}">
+        <label for="${id}">${field.label} ${req}</label>
+        ${control}
+        ${field.help ? `<div class="help">${escapeHtml(field.help)}</div>` : ''}
+      </div>
+    `;
   }
-}
 
-function submitForm(){
-  collectCurrentSection();
+  function renderRoleTabs() {
+    const tabs = document.getElementById('roleTabs');
+    tabs.innerHTML = Object.entries(ROLE_CONFIG).map(([role, cfg]) => `
+      <button type="button"
+              class="tab-btn"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel_${role}"
+              data-role="${role}">
+        ${cfg.icon} ${cfg.title}
+      </button>
+    `).join('');
 
-  var SHEET_URL = 'https://script.google.com/macros/s/AKfycbwI99r5WObiDuWFZp7bgcqFaOfzOEAzD5hDNhZ0Zbx_FVDGRiC7nZaQKHQez_oPrfum/exec';
+    tabs.querySelectorAll('.tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => activateRole(btn.dataset.role));
+    });
+  }
 
-  var data = Object.assign({ role: selectedType }, responses);
+  function renderApp() {
+    const app = document.getElementById('app');
+    app.innerHTML = Object.entries(ROLE_CONFIG).map(([role, cfg]) => `
+      <section class="card panel" id="panel_${role}" aria-labelledby="panel_heading_${role}">
+        <div class="panel-head">
+          <h2 id="panel_heading_${role}">${cfg.icon} ${cfg.title}</h2>
+          <p>${cfg.description}</p>
+        </div>
+        <div class="panel-body">
+          <form id="form_${role}" novalidate>
+            <div class="section-card">
+              <h3>Interview metadata</h3>
+              <p class="section-desc">Required fields are enforced. Numeric fields have basic range checks so you do not save garbage.</p>
+              <div class="field-grid">
+                ${cfg.fields.map(renderField).join('')}
+                <div class="field full" data-field="respondent_id_${role}">
+                  <label for="respondent_id_${role}">Interview ID / respondent code</label>
+                  <input type="text" id="respondent_id_${role}" name="respondent_id_${role}" placeholder="Optional internal code">
+                  <div class="help">Use this if you want a field-safe identifier instead of full name.</div>
+                </div>
+              </div>
+            </div>
 
-  var btn = document.getElementById('btn-submit');
-  btn.textContent = 'Saving...';
-  btn.disabled = true;
+            <div class="section-card">
+              <h3>Consent and confidentiality</h3>
+              <div class="consent-box">
+                <div class="notice info">
+                  <strong>Read this to the respondent before starting</strong>
+                  <ul style="margin:6px 0 0 16px;line-height:1.7">
+                    <li><strong>Purpose:</strong> This interview is part of the PRANAA impact assessment conducted by People to People Health Foundation (PPHF). Responses are used only to evaluate and improve the programme.</li>
+                    <li><strong>Voluntary:</strong> Participation is completely voluntary. The respondent may skip any question or stop at any time without giving a reason.</li>
+                    <li><strong>Names optional:</strong> Full names are not required. Initials or an interview ID are preferred.</li>
+                    <li><strong>Who sees this data:</strong> Responses will be accessed only by the PPHF assessment team and Boston Scientific representatives directly involved in PRANAA. Data will not be shared with any third party, government body, or insurer.</li>
+                    <li><strong>Health information:</strong> Any health condition recorded is for assessment purposes only and will not affect the respondent's access to services, insurance, or government schemes.</li>
+                    <li><strong>Retention:</strong> Interview data will be retained for the duration of the project and up to 3 years for reporting. Records will be stored securely and deleted thereafter.</li>
+                  </ul>
+                </div>
+                <label class="checkline" for="consent_${role}">
+                  <input type="checkbox" id="consent_${role}" name="consent_${role}" required>
+                  <span>I read the above statement to the respondent and confirmed verbal consent before starting this interview. <span class="req">*</span></span>
+                </label>
+              </div>
+            </div>
 
-  fetch(SHEET_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  }).catch(function(){}).finally(function(){
-    document.getElementById('progressFill').style.width = '100%';
-    document.getElementById('progressLabel').textContent = 'Completed';
-    document.getElementById('page-form').classList.remove('active');
-    document.getElementById('page-thanks').classList.add('active');
-    window.scrollTo({top:0, behavior:'smooth'});
-  });
-}
+            <div class="section-card">
+              <h3>Exposure verification</h3>
+              <p class="section-desc">Do not jump into impact questions without checking actual exposure first.</p>
+              <div id="exposure_${role}"></div>
+            </div>
 
+            <div class="section-card">
+              <h3>Main interview questions</h3>
+              <p class="section-desc">All closed-ended questions are required. Probe notes are optional unless a conditional follow-up is triggered.</p>
+              <div id="questions_${role}"></div>
+            </div>
+
+            <div class="section-card">
+              <h3>Save, backup, and submit</h3>
+              <div class="actions">
+                <button type="button" class="ghost-btn" data-action="save-draft" data-role="${role}">Save draft now</button>
+                <button type="button" class="ghost-btn" data-action="export-json" data-role="${role}">Export this interview</button>
+                <button type="submit" class="primary-btn" id="submit_${role}">${cfg.submitLabel}</button>
+              </div>
+              <div class="meta-row">
+                <div id="draftMeta_${role}">No local draft saved yet.</div>
+                <div id="exposureMeta_${role}"></div>
+              </div>
+              <div class="status" id="status_${role}"></div>
+            </div>
+          </form>
+        </div>
+      </section>
+    `).join('');
+
+    Object.keys(ROLE_CONFIG).forEach((role) => {
+      renderQuestions(role, 'exposure', EXPOSURE_QUESTIONS);
+      renderQuestions(role, 'questions', QUESTIONS[role] || []);
+      hydrateDefaultDates(role);
+      wireForm(role);
+      restoreDraft(role);
+    });
+  }
+
+  function renderQuestions(role, sectionName, questions) {
+    const container = document.getElementById(`${sectionName}_${role}`);
+    container.innerHTML = questions.map((q) => renderQuestionHtml(role, q, sectionName === 'exposure')).join('');
+  }
+
+  function renderQuestionHtml(role, q, isExposure) {
+    const qKey = `${role}_${q.id}`;
+    if (q.isNotes) {
+      return `
+        <div class="question" data-question="${qKey}" data-question-id="${q.id}">
+          <div class="question-header">
+            <div class="q-tag">✎</div>
+            <div>
+              <h4 class="q-title">${escapeHtml(q.text)}</h4>
+              ${q.probe ? `<div class="probe" style="margin-left:0">Probe: ${escapeHtml(q.probe)}</div>` : ''}
+            </div>
+          </div>
+          <div class="supporting-grid" style="margin-left:0;margin-top:12px">
+            <div class="field">
+              <label for="${qKey}__notes">Verbatim quote / general observation</label>
+              <textarea id="${qKey}__notes" name="${qKey}__notes"
+                placeholder="Record a key verbatim quote from this respondent, or a non-verbal observation."></textarea>
+            </div>
+            <div class="field">
+              <label for="${qKey}__pos_example">
+                ✅ Positive example from this interview
+                <span class="help" style="display:inline;font-weight:normal"> — where the system worked</span>
+              </label>
+              <textarea id="${qKey}__pos_example" name="${qKey}__pos_example"
+                placeholder="Describe one specific situation where PRANAA worked well for this person / community."></textarea>
+            </div>
+            <div class="field">
+              <label for="${qKey}__neg_example">
+                ⚠️ Negative example from this interview
+                <span class="help" style="display:inline;font-weight:normal"> — where the system did not work</span>
+              </label>
+              <textarea id="${qKey}__neg_example" name="${qKey}__neg_example"
+                placeholder="Describe one specific situation where PRANAA failed, a gap was not closed, or follow-up broke down."></textarea>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    const inputType = q.multi ? 'checkbox' : 'radio';
+    const tagClass = isExposure ? 'q-tag exp' : (q.isNew ? 'q-tag new' : 'q-tag');
+    const tiny = q.multi ? '<span class="tiny">Select all that apply</span>' : '<span class="tiny">Select one</span>';
+
+    const choices = q.options.map((opt, index) => {
+      const inputId = `${qKey}__opt_${index}`;
+      const exclusive = q.multi && isExclusiveOption(opt) ? 'true' : 'false';
+      const name = q.multi ? `${qKey}[]` : qKey;
+      return `
+        <label class="choice" for="${inputId}">
+          <input type="${inputType}"
+                 id="${inputId}"
+                 name="${name}"
+                 value="${escapeHtml(opt)}"
+                 data-question-key="${qKey}"
+                 data-exclusive="${exclusive}">
+          <span>${escapeHtml(opt)}</span>
+        </label>
+      `;
+    }).join('');
+
+    return `
+      <fieldset class="question" data-question="${qKey}" data-question-id="${q.id}" data-role="${role}" data-multi="${q.multi ? 'true' : 'false'}">
+        <div class="question-header">
+          <div class="${tagClass}">${escapeHtml(q.id)}</div>
+          <div>
+            <h4 class="q-title">${escapeHtml(q.text)} ${tiny}</h4>
+          </div>
+        </div>
+        ${q.probe ? `<div class="probe">Probe: ${escapeHtml(q.probe)}</div>` : ''}
+        <div class="choices">${choices}</div>
+        <div class="supporting-grid">
+          <div class="field">
+            <label for="${qKey}__notes">Probe notes / evidence</label>
+            <textarea id="${qKey}__notes" name="${qKey}__notes" placeholder="Short evidence note, example, or reason for don't know / not applicable."></textarea>
+          </div>
+          <div class="field conditional-box" data-followup-box="${qKey}" hidden>
+            <label for="${qKey}__detail" data-followup-label="${qKey}">Details required</label>
+            <textarea id="${qKey}__detail" name="${qKey}__detail" placeholder="Provide the follow-up detail required by the selected answer."></textarea>
+          </div>
+        </div>
+      </fieldset>
+    `;
+  }
+
+  function hydrateDefaultDates(role) {
+    const form = document.getElementById(`form_${role}`);
+    form.querySelectorAll('input[type="date"]').forEach((input) => {
+      if (!input.value) input.value = todayISO();
+    });
+  }
+
+  function activateRole(role) {
+    setActiveRole(role);
+    document.querySelectorAll('.tab-btn').forEach((btn) => {
+      const active = btn.dataset.role === role;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    document.querySelectorAll('.panel').forEach((panel) => {
+      panel.classList.toggle('active', panel.id === `panel_${role}`);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    updateExposureMeta(role);
+  }
+
+  function wireForm(role) {
+    const form = document.getElementById(`form_${role}`);
+    const autosave = debounce(() => saveDraft(role, false), APP_CONFIG.AUTOSAVE_DEBOUNCE_MS);
+
+    form.addEventListener('change', (event) => {
+      if (event.target.matches('input[type="checkbox"][data-exclusive="true"]')) {
+        enforceExclusiveCheckboxes(event.target);
+      } else if (event.target.matches('input[type="checkbox"][data-exclusive="false"]')) {
+        releaseExclusiveSibling(event.target);
+      }
+      updateConditionalFollowups(form);
+      updateExposureMeta(role);
+      autosave();
+    });
+
+    form.addEventListener('input', () => autosave());
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      await handleSubmit(role);
+    });
+
+    form.querySelector('[data-action="save-draft"]').addEventListener('click', () => {
+      saveDraft(role, true);
+      showStatus(role, 'success', 'Draft saved locally in this browser.');
+    });
+
+    form.querySelector('[data-action="export-json"]').addEventListener('click', () => {
+      const result = validateRole(role, false);
+      const payload = buildPayload(role);
+      downloadJson(payload, `${role}_interview_${payload.meta.requestId}.json`);
+      if (!result.valid) {
+        showStatus(role, 'warn', 'Interview exported, but there are validation gaps. Fix them before final submission.');
+      } else {
+        showStatus(role, 'success', 'Interview exported as JSON backup.');
+      }
+    });
+  }
+
+  function enforceExclusiveCheckboxes(changed) {
+    if (!changed.checked) return;
+    const qKey = changed.dataset.questionKey;
+    document.querySelectorAll(`input[type="checkbox"][data-question-key="${qKey}"]`).forEach((input) => {
+      if (input !== changed) input.checked = false;
+    });
+  }
+
+  function releaseExclusiveSibling(changed) {
+    if (!changed.checked) return;
+    const qKey = changed.dataset.questionKey;
+    document.querySelectorAll(`input[type="checkbox"][data-question-key="${qKey}"][data-exclusive="true"]`).forEach((input) => {
+      input.checked = false;
+    });
+  }
+
+  function getSelectedValues(form, qKey) {
+    const checked = Array.from(form.querySelectorAll(`[data-question-key="${qKey}"]:checked`));
+    return checked.map((node) => node.value);
+  }
+
+  function matchesCase(selectedValues, ruleCase) {
+    if (!selectedValues.length) return false;
+    return ruleCase.includes.some((value) => selectedValues.includes(value));
+  }
+
+  function updateConditionalFollowups(form) {
+    form.querySelectorAll('[data-question]').forEach((questionEl) => {
+      const qKey = questionEl.dataset.question;
+      const followupBox = questionEl.querySelector(`[data-followup-box="${qKey}"]`);
+      if (!followupBox) return;
+
+      const detailLabel = questionEl.querySelector(`[data-followup-label="${qKey}"]`);
+      const detailField = questionEl.querySelector(`#${CSS.escape(qKey)}__detail`);
+      const rules = DETAIL_RULES[qKey];
+      const selected = getSelectedValues(form, qKey);
+
+      let activeCase = null;
+      if (rules && Array.isArray(rules.cases)) {
+        activeCase = rules.cases.find((ruleCase) => matchesCase(selected, ruleCase)) || null;
+      }
+
+      if (activeCase) {
+        followupBox.hidden = false;
+        detailLabel.textContent = activeCase.label + ' *';
+        detailField.dataset.requiredConditional = 'true';
+      } else {
+        followupBox.hidden = true;
+        detailLabel.textContent = 'Details required';
+        detailField.dataset.requiredConditional = 'false';
+        detailField.value = '';
+        followupBox.classList.remove('invalid');
+      }
+    });
+  }
+
+  function validateRole(role, showErrors = true) {
+    const form = document.getElementById(`form_${role}`);
+    updateConditionalFollowups(form);
+
+    const errors = [];
+    form.querySelectorAll('.invalid').forEach((node) => node.classList.remove('invalid'));
+
+    // Basic required metadata
+    form.querySelectorAll('.field input, .field select, .field textarea').forEach((field) => {
+      if (field.closest('.question')) return;
+      if (field.required) {
+        const empty = field.type === 'checkbox' ? !field.checked : !String(field.value || '').trim();
+        if (empty) {
+          errors.push('Fill all required interview metadata and consent fields.');
+          if (showErrors) field.closest('.field')?.classList.add('invalid');
+        }
+      }
+
+      if (field.type === 'number' && field.value !== '') {
+        const n = Number(field.value);
+        const min = field.min !== '' ? Number(field.min) : null;
+        const max = field.max !== '' ? Number(field.max) : null;
+        if ((min !== null && n < min) || (max !== null && n > max)) {
+          errors.push(`Numeric value out of range in "${field.closest('.field')?.querySelector('label')?.textContent?.trim() || field.name}".`);
+          if (showErrors) field.closest('.field')?.classList.add('invalid');
+        }
+      }
+    });
+
+    // Consent
+    const consent = form.querySelector(`#consent_${role}`);
+    if (!consent.checked) {
+      errors.push('Consent must be confirmed before submission.');
+      if (showErrors) consent.closest('.checkline')?.classList.add('invalid');
+    }
+
+    // Question validation
+    form.querySelectorAll('.question').forEach((questionEl) => {
+      const qKey = questionEl.dataset.question;
+      if (!qKey || qKey.endsWith('_notes')) return;
+      const qId = questionEl.dataset.questionId || '';
+      const hasChoiceInputs = questionEl.querySelectorAll('[data-question-key]').length > 0;
+      if (!hasChoiceInputs) return;
+
+      const selected = getSelectedValues(form, qKey);
+      if (!selected.length) {
+        errors.push(`Question ${qId} is unanswered.`);
+        if (showErrors) questionEl.classList.add('invalid');
+      }
+
+      const checked = Array.from(questionEl.querySelectorAll('input[type="checkbox"]:checked'));
+      if (checked.length > 1 && checked.some((node) => node.dataset.exclusive === 'true')) {
+        errors.push(`Question ${qId} has an exclusive option selected together with other options.`);
+        if (showErrors) questionEl.classList.add('invalid');
+      }
+
+      const followup = questionEl.querySelector(`#${CSS.escape(qKey)}__detail`);
+      if (followup && followup.dataset.requiredConditional === 'true' && !String(followup.value || '').trim()) {
+        errors.push(`Question ${qId} requires follow-up detail.`);
+        if (showErrors) {
+          questionEl.classList.add('invalid');
+          followup.closest('.field')?.classList.add('invalid');
+        }
+      }
+    });
+
+    return {
+      valid: errors.length === 0,
+      errors: [...new Set(errors)]
+    };
+  }
+
+  function getFormState(role) {
+    const form = document.getElementById(`form_${role}`);
+    const state = {};
+    form.querySelectorAll('input, select, textarea').forEach((field) => {
+      if (!field.name) return;
+      if (field.type === 'checkbox' || field.type === 'radio') {
+        if (!state[field.name]) state[field.name] = [];
+        if (field.checked) state[field.name].push(field.value || '__checked__');
+      } else {
+        state[field.name] = field.value;
+      }
+    });
+    return state;
+  }
+
+  function saveDraft(role, announceTime) {
+    const payload = {
+      savedAt: new Date().toISOString(),
+      state: getFormState(role)
+    };
+    localStorage.setItem(draftKey(role), JSON.stringify(payload));
+    const meta = document.getElementById(`draftMeta_${role}`);
+    meta.textContent = `Draft saved locally: ${new Date(payload.savedAt).toLocaleString()}`;
+  }
+
+  function restoreDraft(role) {
+    try {
+      const raw = localStorage.getItem(draftKey(role));
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      const state = parsed.state || {};
+      const form = document.getElementById(`form_${role}`);
+      Object.entries(state).forEach(([name, value]) => {
+        const fields = form.querySelectorAll(`[name="${CSS.escape(name)}"]`);
+        if (!fields.length) return;
+
+        const first = fields[0];
+        if (first.type === 'checkbox' || first.type === 'radio') {
+          const selected = Array.isArray(value) ? value : [value];
+          fields.forEach((field) => {
+            field.checked = selected.includes(field.value || '__checked__');
+          });
+        } else {
+          first.value = value ?? '';
+        }
+      });
+      updateConditionalFollowups(form);
+      const meta = document.getElementById(`draftMeta_${role}`);
+      if (parsed.savedAt) {
+        meta.textContent = `Draft restored from local browser storage: ${new Date(parsed.savedAt).toLocaleString()}`;
+      }
+    } catch (error) {
+      console.error('Draft restore failed', error);
+    }
+  }
+
+  function buildPayload(role) {
+    const form = document.getElementById(`form_${role}`);
+    const cfg = ROLE_CONFIG[role];
+    const requestId = `PRANAA-${role}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+    const metadata = {
+      role,
+      roleTitle: cfg.title,
+      formVersion: APP_CONFIG.FORM_VERSION,
+      requestId,
+      savedFrom: window.location.href,
+      submittedAtClient: new Date().toISOString(),
+      interviewerDeviceOnline: navigator.onLine,
+      userAgent: navigator.userAgent
+    };
+
+    cfg.fields.forEach((field) => {
+      metadata[field.name] = form.querySelector(`[name="${CSS.escape(field.name)}"]`)?.value ?? '';
+    });
+    metadata[`respondent_id_${role}`] = form.querySelector(`[name="respondent_id_${role}"]`)?.value ?? '';
+    metadata[`consent_${role}`] = !!form.querySelector(`#consent_${role}`)?.checked;
+
+    const captureQuestion = (q) => {
+      const qKey = `${role}_${q.id}`;
+      if (q.isNotes) {
+        return {
+          id: q.id,
+          text: q.text,
+          type: 'notes',
+          notes: form.querySelector(`[name="${CSS.escape(qKey)}__notes"]`)?.value ?? '',
+          positiveExample: form.querySelector(`[name="${CSS.escape(qKey)}__pos_example"]`)?.value ?? '',
+          negativeExample: form.querySelector(`[name="${CSS.escape(qKey)}__neg_example"]`)?.value ?? ''
+        };
+      }
+      return {
+        id: q.id,
+        text: q.text,
+        type: q.multi ? 'multi' : 'single',
+        selected: getSelectedValues(form, qKey),
+        probeNotes: form.querySelector(`[name="${CSS.escape(qKey)}__notes"]`)?.value ?? '',
+        detail: form.querySelector(`[name="${CSS.escape(qKey)}__detail"]`)?.value ?? ''
+      };
+    };
+
+    const exposure = EXPOSURE_QUESTIONS.map(captureQuestion);
+    const responses = (QUESTIONS[role] || []).map(captureQuestion);
+
+    const limitedExposure = exposure.find((q) => q.id === 'E1')?.selected?.includes('None / Not sure') || false;
+
+    return {
+      meta: metadata,
+      flags: {
+        limitedExposure
+      },
+      exposure,
+      responses
+    };
+  }
+
+  function downloadJson(payload, filename) {
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  async function handleSubmit(role) {
+    const result = validateRole(role, true);
+    if (!result.valid) {
+      showStatus(role, 'error', renderValidationMessage(result.errors));
+      focusFirstInvalid(role);
+      return;
+    }
+
+    const payload = buildPayload(role);
+    const submitBtn = document.getElementById(`submit_${role}`);
+    submitBtn.disabled = true;
+    showStatus(role, 'info', 'Saving interview…');
+
+    // ALWAYS queue locally first — data is safe before any network attempt.
+    addToQueue(payload, 'Saved before network attempt');
+
+    if (!APP_CONFIG.SUBMIT_ENDPOINT) {
+      showStatus(role, 'warn', 'No endpoint configured. Interview is stored locally. Use "Download queued backup" to export.');
+      submitBtn.disabled = false;
+      updateQueueNotice();
+      return;
+    }
+
+    try {
+      // Google Apps Script requires no-cors (it redirects on POST).
+      // With no-cors the response is opaque — we cannot read status or body.
+      // We treat a network-level success (no exception thrown) as "sent".
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), APP_CONFIG.REQUEST_TIMEOUT_MS);
+      await fetch(APP_CONFIG.SUBMIT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' }, // no-cors blocks custom headers
+        body: JSON.stringify(payload),
+        mode: 'no-cors',
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+
+      // Network call completed without throwing — remove item we queued above.
+      const q = getQueue();
+      q.pop();
+      setQueue(q);
+
+      localStorage.removeItem(draftKey(role));
+      resetForm(role);
+      showStatus(role, 'success',
+        '✅ Interview saved locally and sent to Google Sheets. ' +
+        'Because the form uses Google Apps Script, the browser cannot read the server confirmation — ' +
+        'check your Google Sheet to verify the row was recorded.');
+    } catch (error) {
+      // Queue entry is already saved above — data is not lost.
+      showStatus(role, 'warn',
+        `📴 Network failed (${error.message}). Interview is stored locally and will appear in "queued submissions". ` +
+        'Tap "Sync queued submissions" when you have internet and verify the Google Sheet.');
+    } finally {
+      submitBtn.disabled = false;
+      updateQueueNotice();
+    }
+  }
+
+  function resetForm(role) {
+    const form = document.getElementById(`form_${role}`);
+    form.reset();
+    hydrateDefaultDates(role);
+    form.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach((field) => field.checked = false);
+    updateConditionalFollowups(form);
+    const status = document.getElementById(`status_${role}`);
+    status.className = 'status';
+    status.textContent = '';
+    const draftMeta = document.getElementById(`draftMeta_${role}`);
+    draftMeta.textContent = 'No local draft saved yet.';
+    updateExposureMeta(role);
+  }
+
+  function focusFirstInvalid(role) {
+    const root = document.getElementById(`form_${role}`);
+    const node = root.querySelector('.invalid input, .invalid select, .invalid textarea, .question.invalid');
+    if (node) {
+      node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (typeof node.focus === 'function') node.focus();
+    }
+  }
+
+  function renderValidationMessage(errors) {
+    const items = errors.slice(0, 8).map((e) => `<li>${escapeHtml(e)}</li>`).join('');
+    const more = errors.length > 8 ? `<li>And ${errors.length - 8} more issue(s).</li>` : '';
+    return `Fix the validation issues before submitting.<ul class="summary-list">${items}${more}</ul>`;
+  }
+
+  function showStatus(role, type, messageHtml) {
+    const status = document.getElementById(`status_${role}`);
+    status.className = `status show ${type}`;
+    status.innerHTML = messageHtml;
+  }
+
+  async function syncQueuedSubmissions() {
+    const queue = getQueue();
+    if (!queue.length) {
+      updateQueueNotice();
+      return;
+    }
+
+    if (!APP_CONFIG.SUBMIT_ENDPOINT) {
+      alert('Cannot sync because SUBMIT_ENDPOINT is still empty.');
+      return;
+    }
+
+    const remaining = [];
+    for (const item of queue) {
+      try {
+        await fetch(APP_CONFIG.SUBMIT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(item.payload),
+          mode: 'no-cors'
+        });
+        // no-cors: opaque response — if fetch didn't throw, assume sent.
+      } catch (error) {
+        remaining.push(item);
+      }
+    }
+    setQueue(remaining);
+  }
+
+  function downloadQueuedBackup() {
+    const queue = getQueue();
+    if (!queue.length) {
+      alert('No queued submissions found.');
+      return;
+    }
+    downloadJson(queue, `pranaa_queued_backup_${todayISO()}.json`);
+  }
+
+  function updateEndpointNotice() {
+    const configured = !!APP_CONFIG.SUBMIT_ENDPOINT;
+    const notice = document.getElementById('endpointNotice');
+    const pill = document.getElementById('endpointPill');
+
+    if (configured) {
+      notice.className = 'notice success';
+      notice.innerHTML = '<strong>Submission endpoint configured (Google Apps Script)</strong> ' +
+        'Interviews will be sent to your Google Sheet. ' +
+        '<em>Because GAS requires no-cors, the browser cannot read the server response — ' +
+        'verify submission by checking your Google Sheet directly or using the queued backup.</em>';
+      pill.className = 'endpoint-pill notice success';
+      pill.textContent = 'GAS endpoint configured';
+    } else {
+      notice.className = 'notice warn';
+      notice.innerHTML = '<strong>Submission endpoint missing</strong> Set APP_CONFIG.SUBMIT_ENDPOINT before production deployment. Until then, interviews will only be queued locally or exported manually.';
+      pill.className = 'endpoint-pill notice warn';
+      pill.textContent = 'Endpoint not configured';
+    }
+  }
+
+  function updateQueueNotice() {
+    const queue = getQueue();
+    const notice = document.getElementById('queueNotice');
+    if (!queue.length) {
+      notice.className = 'notice success';
+      notice.innerHTML = '<strong>No queued submissions</strong> There are currently no unsent interviews stored in this browser.';
+      return;
+    }
+    notice.className = 'notice warn';
+    notice.innerHTML = `<strong>${queue.length} queued submission(s)</strong> These interviews were saved locally because network or server confirmation failed. Use "Sync queued submissions" after fixing connectivity or backend issues.`;
+  }
+
+  function updateExposureMeta(role) {
+    const form = document.getElementById(`form_${role}`);
+    const values = getSelectedValues(form, `${role}_E1`);
+    const meta = document.getElementById(`exposureMeta_${role}`);
+    if (values.includes('None / Not sure')) {
+      meta.innerHTML = '<span class="error-text">Exposure note:</span> respondent reported little or no direct exposure. Interpret impact answers cautiously.';
+    } else if (values.length) {
+      meta.textContent = `Exposure captured: ${values.length} activity type(s) selected.`;
+    } else {
+      meta.textContent = 'Exposure not yet captured.';
+    }
+  }
+
+  function initGlobalActions() {
+    document.getElementById('syncQueueBtn').addEventListener('click', async () => {
+      await syncQueuedSubmissions();
+      updateQueueNotice();
+      alert('Queue sync attempt completed.');
+    });
+
+    document.getElementById('downloadQueueBtn').addEventListener('click', () => {
+      downloadQueuedBackup();
+    });
+  }
+
+  function init() {
+    renderRoleTabs();
+    renderApp();
+    initGlobalActions();
+    updateEndpointNotice();
+    updateQueueNotice();
+    activateRole(getActiveRole());
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
