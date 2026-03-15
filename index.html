@@ -751,11 +751,40 @@ function prevSection(){
 }
 
 function submitForm(){
-  document.getElementById('progressFill').style.width = '100%';
-  document.getElementById('progressLabel').textContent = 'Completed';
-  document.getElementById('page-form').classList.remove('active');
-  document.getElementById('page-thanks').classList.add('active');
-  window.scrollTo({top:0, behavior:'smooth'});
+  var SHEET_URL = 'https://script.google.com/macros/s/AKfycbwI99r5WObiDuWFZp7bgcqFaOfzOEAzD5hDNhZ0Zbx_FVDGRiC7nZaQKHQez_oPrfum/exec';
+
+  var data = { role: selectedType };
+
+  document.querySelectorAll('input[type=text], input[type=number], input[type=email], input[type=tel], select, textarea').forEach(function(el){
+    if(el.id) data[el.id] = el.value;
+  });
+
+  document.querySelectorAll('input[type=checkbox]').forEach(function(el){
+    if(el.checked){
+      if(data[el.name]){
+        data[el.name] = data[el.name] + ' | ' + el.value;
+      } else {
+        data[el.name] = el.value;
+      }
+    }
+  });
+
+  var btn = document.getElementById('btn-submit');
+  btn.textContent = 'Saving...';
+  btn.disabled = true;
+
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  }).catch(function(){}).finally(function(){
+    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('progressLabel').textContent = 'Completed';
+    document.getElementById('page-form').classList.remove('active');
+    document.getElementById('page-thanks').classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
 }
 
 </script>
