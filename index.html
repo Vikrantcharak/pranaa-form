@@ -741,33 +741,43 @@ function renderSection(){
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 
+function collectCurrentSection(){
+  document.querySelectorAll('input[type=text], input[type=number], input[type=email], input[type=tel], select, textarea').forEach(function(el){
+    if(el.id) responses[el.id] = el.value;
+  });
+  document.querySelectorAll('input[type=checkbox]').forEach(function(el){
+    if(el.checked){
+      if(responses[el.name]){
+        responses[el.name] = responses[el.name] + ' | ' + el.value;
+      } else {
+        responses[el.name] = el.value;
+      }
+    } else {
+      if(!responses[el.name]) responses[el.name] = '';
+    }
+  });
+}
+
 function nextSection(){
+  collectCurrentSection();
   currentSection++;
   renderSection();
 }
 
 function prevSection(){
-  if(currentSection > 0){ currentSection--; renderSection(); }
+  if(currentSection > 0){
+    collectCurrentSection();
+    currentSection--;
+    renderSection();
+  }
 }
 
 function submitForm(){
+  collectCurrentSection();
+
   var SHEET_URL = 'https://script.google.com/macros/s/AKfycbwI99r5WObiDuWFZp7bgcqFaOfzOEAzD5hDNhZ0Zbx_FVDGRiC7nZaQKHQez_oPrfum/exec';
 
-  var data = { role: selectedType };
-
-  document.querySelectorAll('input[type=text], input[type=number], input[type=email], input[type=tel], select, textarea').forEach(function(el){
-    if(el.id) data[el.id] = el.value;
-  });
-
-  document.querySelectorAll('input[type=checkbox]').forEach(function(el){
-    if(el.checked){
-      if(data[el.name]){
-        data[el.name] = data[el.name] + ' | ' + el.value;
-      } else {
-        data[el.name] = el.value;
-      }
-    }
-  });
+  var data = Object.assign({ role: selectedType }, responses);
 
   var btn = document.getElementById('btn-submit');
   btn.textContent = 'Saving...';
