@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Project PRANAA – Impact Assessment</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --blue:#1F4E79;--mid:#2E75B6;--light:#D6E4F0;--amber:#C17F24;
+    --yellow:#FFF8E1;--green:#2e7d32;--red:#c62828;
+    --bg:#f5f7fa;--card:#ffffff;--text:#1a1a1a;--muted:#555;--border:#dde3ea;
+  }
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0 0 60px}
+  header{background:var(--blue);color:#fff;padding:18px 20px 14px;text-align:center}
+  header h1{font-size:1.5rem;font-weight:700;letter-spacing:.5px}
+  header p{font-size:.85rem;opacity:.85;margin-top:4px}
+  .progress-bar{background:#1a3a5c;height:6px}
+  .progress-fill{background:var(--amber);height:100%;transition:width .4s ease;min-width:2%}
+  .progress-label{background:var(--blue);color:#fff;text-align:center;font-size:.75rem;padding:4px 0 6px;opacity:.8}
+  .container{max-width:680px;margin:0 auto;padding:20px 16px}
+  .card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:24px 22px;margin-bottom:18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  h2{font-size:1.15rem;font-weight:700;color:var(--blue);margin-bottom:10px}
+  h3{font-size:1rem;font-weight:600;color:var(--text);margin:18px 0 8px;line-height:1.4}
+  .section-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--mid);background:var(--light);padding:5px 10px;border-radius:6px;display:inline-block;margin-bottom:14px}
+  p.desc{font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:12px}
+  label.field-label{display:block;font-size:.9rem;font-weight:600;margin-bottom:6px;color:var(--text)}
+  input[type=text],input[type=number],input[type=email],input[type=tel],select,textarea{
+    width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;
+    font-size:.92rem;color:var(--text);background:#fff;outline:none;transition:border .2s;font-family:inherit
+  }
+  input:focus,select:focus,textarea:focus{border-color:var(--mid);box-shadow:0 0 0 3px rgba(46,117,182,.12)}
+  textarea{resize:vertical;min-height:80px}
+  .radio-group,.check-group{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+  .radio-group label,.check-group label{
+    display:flex;align-items:flex-start;gap:10px;
+    background:#f8fafc;border:1.5px solid var(--border);
+    border-radius:8px;padding:10px 12px;cursor:pointer;font-size:.88rem;line-height:1.4;
+    transition:background .15s,border-color .15s
+  }
+  .radio-group label:hover,.check-group label:hover{background:var(--light);border-color:var(--mid)}
+  .radio-group label.selected,.check-group label.selected{background:var(--light);border-color:var(--mid);color:var(--blue)}
+  .radio-group input[type=radio],.check-group input[type=checkbox]{margin-top:2px;accent-color:var(--mid);flex-shrink:0;width:16px;height:16px}
+  .q-block{margin-bottom:22px;padding-bottom:22px;border-bottom:1px solid var(--border)}
+  .q-block:last-child{border-bottom:none;padding-bottom:0;margin-bottom:0}
+  .q-num{display:inline-block;background:var(--blue);color:#fff;font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:4px;margin-bottom:8px}
+  .new-badge{display:inline-block;background:#FFF3CD;color:#856404;font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:4px;margin-left:6px;vertical-align:middle}
+  .note-box{background:var(--yellow);border-left:4px solid var(--amber);border-radius:0 8px 8px 0;padding:12px 14px;font-size:.84rem;color:#6d4c00;margin-bottom:16px;line-height:1.5}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:8px;font-size:.95rem;font-weight:600;cursor:pointer;border:none;transition:background .2s,transform .1s}
+  .btn:active{transform:scale(.98)}
+  .btn-primary{background:var(--blue);color:#fff}
+  .btn-primary:hover{background:#163b5c}
+  .btn-secondary{background:#fff;color:var(--blue);border:2px solid var(--blue)}
+  .btn-secondary:hover{background:var(--light)}
+  .btn-amber{background:var(--amber);color:#fff}
+  .btn-amber:hover{background:#a06c1a}
+  .btn-row{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
+  .type-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+  .type-card{border:2px solid var(--border);border-radius:10px;padding:14px 12px;cursor:pointer;text-align:center;transition:all .2s;background:#fff}
+  .type-card:hover{border-color:var(--mid);background:var(--light)}
+  .type-card.active{border-color:var(--blue);background:var(--light)}
+  .type-card .icon{font-size:1.5rem;margin-bottom:6px;display:block}
+  .type-card span{font-size:.82rem;font-weight:600;color:var(--text);line-height:1.3;display:block}
+  .required{color:var(--red);margin-left:2px}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+  @media(max-width:480px){.field-row{grid-template-columns:1fr}.type-grid{grid-template-columns:1fr}}
+  .thank-you{text-align:center;padding:40px 20px}
+  .thank-you .check-circle{width:64px;height:64px;background:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:2rem;color:#fff}
+  .thank-you h2{color:var(--green);font-size:1.4rem;margin-bottom:10px}
+  .thank-you p{color:var(--muted);font-size:.92rem;line-height:1.6;max-width:400px;margin:0 auto}
+  .error-msg{color:var(--red);font-size:.78rem;margin-top:4px;display:none}
+  .field.has-error input,.field.has-error select,.field.has-error textarea{border-color:var(--red)}
+  .field.has-error .error-msg{display:block}
+  .exposure-tag{display:inline-block;background:#e3f2fd;color:#0d47a1;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:8px;letter-spacing:.3px}
+  .lang-note{font-size:.75rem;color:var(--muted);margin-top:4px;font-style:italic}
+  #page-cover,#page-form,#page-thanks{display:none}
+  #page-cover.active,#page-form.active,#page-thanks.active{display:block}
+  .step-counter{display:flex;gap:6px;justify-content:center;margin:12px 0 4px}
+  .step-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35)}
+  .step-dot.active{background:#fff}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Project PRANAA</h1>
+  <p>Need &amp; Impact Assessment · People to People Health Foundation</p>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:5%"></div></div>
+<div class="progress-label" id="progressLabel">Step 1 of 5</div>
+
+<div class="container">
+
+<!-- ══════ COVER PAGE ══════ -->
+<div id="page-cover" class="active">
+  <div class="card" style="margin-top:12px">
+    <h2>Welcome</h2>
+    <p class="desc">This short assessment helps us understand how Project PRANAA has affected your community's health. Your responses are <strong>confidential</strong> and will only be used to improve the programme. It takes about <strong>10–15 minutes</strong>.</p>
+    <div class="note-box">&#128274; Your name is optional. There are no right or wrong answers — please share your honest experience.</div>
+
+    <label class="field-label">Select your role <span class="required">*</span></label>
+    <p class="desc" style="margin-bottom:10px">Who are you? This helps us ask you the most relevant questions.</p>
+
+    <div class="type-grid" id="typeGrid">
+      <div class="type-card" data-type="community" onclick="selectType(this,'community')">
+        <span class="icon">&#127968;</span>
+        <span>Community Member / Camp Attendee</span>
+      </div>
+      <div class="type-card" data-type="asha" onclick="selectType(this,'asha')">
+        <span class="icon">&#129658;</span>
+        <span>ASHA / ANM / Frontline Worker</span>
+      </div>
+      <div class="type-card" data-type="nurse" onclick="selectType(this,'nurse')">
+        <span class="icon">&#129657;</span>
+        <span>Staff Nurse at PHC</span>
+      </div>
+      <div class="type-card" data-type="teacher" onclick="selectType(this,'teacher')">
+        <span class="icon">&#127979;</span>
+        <span>School Teacher</span>
+      </div>
+      <div class="type-card" data-type="panchayat" onclick="selectType(this,'panchayat')">
+        <span class="icon">&#127963;</span>
+        <span>Panchayat / Community Leader</span>
+      </div>
+      <div class="type-card" data-type="doctor" onclick="selectType(this,'doctor')">
+        <span class="icon">&#129658;</span>
+        <span>PHC Medical Officer</span>
+      </div>
+    </div>
+    <p id="type-error" class="error-msg" style="display:none;margin-top:8px">&#9888; Please select your role to continue.</p>
+
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="startForm()">Start &#8594;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ FORM PAGE ══════ -->
+<div id="page-form">
+  <div id="form-sections"></div>
+
+  <div class="btn-row" id="nav-btns">
+    <button class="btn btn-secondary" id="btn-prev" onclick="prevSection()" style="display:none">&#8592; Back</button>
+    <button class="btn btn-primary" id="btn-next" onclick="nextSection()">Next &#8594;</button>
+    <button class="btn btn-amber" id="btn-submit" onclick="submitForm()" style="display:none">Submit Responses &#10003;</button>
+  </div>
+</div>
+
+<!-- ══════ THANK YOU ══════ -->
+<div id="page-thanks">
+  <div class="card thank-you">
+    <div class="check-circle">&#10003;</div>
+    <h2>Thank you!</h2>
+    <p>Your response has been recorded. Your feedback helps PPHF improve NCD healthcare services in your community. We are grateful for your time.</p>
+    <p style="margin-top:16px;font-size:.82rem;color:#888">Project PRANAA · People to People Health Foundation · pphfglobal.org</p>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+var selectedType = '';
+var responses = {};
+var currentSection = 0;
+var sections = [];
+
+function selectType(el, type){
+  document.querySelectorAll('.type-card').forEach(function(c){c.classList.remove('active');});
+  el.classList.add('active');
+  selectedType = type;
+  document.getElementById('type-error').style.display = 'none';
+}
+
+function startForm(){
+  if(!selectedType){document.getElementById('type-error').style.display='block';return;}
+  sections = buildSections(selectedType);
+  currentSection = 0;
+  document.getElementById('page-cover').classList.remove('active');
+  document.getElementById('page-form').classList.add('active');
+  renderSection();
+}
+
+function buildSections(type){
+  var all = [];
+
+  // ── SECTION 0: Basic details ──────────────────────────────────────────
+  all.push({
+    title: 'Your details',
+    id: 'details',
+    html: function(){
+      var f = '<div class="section-label">Basic information</div>';
+      f += '<p class="desc">This information helps us understand who participated. All fields are optional.</p>';
+      f += field('Name (optional)', 'text', 'det_name', false);
+      f += twoCol(
+        field('Age', 'number', 'det_age', false, '', '25'),
+        field('Gender', 'select', 'det_gender', false, ['Prefer not to say','Female','Male','Other'])
+      );
+      f += field('Village / Area / Location', 'text', 'det_village', false);
+      f += field('Date (today)', 'text', 'det_date', false, '', new Date().toLocaleDateString('en-IN'));
+      return f;
+    }
+  });
+
+  // ── SECTION 1: Exposure ──────────────────────────────────────────────
+  if(type !== 'community'){
+    all.push({
+      title: 'Your exposure to PRANAA',
+      id: 'exposure',
+      html: function(){
+        var f = '<div class="section-label">Exposure verification</div>';
+        f += '<p class="desc">These 3 questions help us understand how much you have directly seen or participated in PRANAA activities.</p>';
+        f += checkQ('E1', 'Which PRANAA activities have you personally seen or participated in?', [
+          'NCD screening camps',
+          'Community awareness sessions',
+          "Women's Wellness Camps",
+          'School-based health sessions',
+          'Training of health workers',
+          'Referral / follow-up support',
+          'Government scheme linkage (ABHA / PMJAY)',
+          'None / Not sure'
+        ], 'exp_e1');
+        f += radioQ('E2', 'Approximately how many PRANAA camps or sessions have you attended or observed?', ['1–2','3–5','6–10','More than 10','Cannot recall'], 'exp_e2');
+        f += radioQ('E3', 'Over what time period have you been involved with PRANAA?', ['Less than 3 months','3–6 months','6–12 months','More than 12 months','Not sure'], 'exp_e3');
+        return f;
+      }
+    });
+  }
+
+  // ── SECTION 2: Role-specific close-ended ────────────────────────────
+  if(type === 'community'){
+    all.push({
+      title: 'About the camp you attended',
+      id: 'camp',
+      html: function(){
+        var f = '<div class="section-label">Camp experience</div>';
+        f += radioQ('Q1', 'How did you first hear about the PRANAA NCD screening camp?', [
+          'Through the ASHA worker','Through a neighbour or family member',
+          'Through a village announcement','Through a school child','Other'
+        ], 'q1');
+        f += radioQ('Q2', 'What was your main reason for attending the camp?', [
+          'Tests were free','ASHA worker personally asked me',
+          'I had symptoms and was worried','Just wanted a routine check-up',
+          'Family member encouraged me'
+        ], 'q2');
+        f += radioQ('Q3', 'Before this camp, had you ever been screened for BP, blood sugar, or cancer?', [
+          'Yes, regularly','Yes, once or twice',
+          'No — this was my first time','No — I did not know such tests existed'
+        ], 'q3');
+        f += radioQ('Q4', 'Which activity did you attend?', [
+          'General NCD screening camp',"Women's Wellness Camp",
+          'Awareness session','School or community health event'
+        ], 'q4');
+        f += radioQ('Q5', 'Did the health staff explain your test results clearly?', [
+          'Yes, very clearly','Yes, but only briefly',
+          'Somewhat — I had to ask multiple times','No — I was not given a clear explanation'
+        ], 'q5');
+        return f;
+      }
+    });
+    all.push({
+      title: 'After the camp — referral & follow-up',
+      id: 'followup',
+      html: function(){
+        var f = '<div class="section-label">Referral &amp; follow-up</div>';
+        f += radioQ('Q6', 'Did you receive a written referral slip or document after the camp?', [
+          'Yes, received written referral','Yes, but only verbal advice',
+          'No referral was needed','I needed one but did not receive it'
+        ], 'q6', true);
+        f += radioQ('Q7', 'Were you referred to another facility for further tests or treatment?', [
+          'Yes, and I went','Yes, but I could not go',
+          'No referral was needed','No referral was given but I needed one'
+        ], 'q7');
+        f += radioQ('Q8', 'If referred but you did not go — what was the main reason?', [
+          'Cost of travel or treatment','Too far to travel',
+          'Had to manage work or family','I felt fine and did not think it was necessary',
+          'No one to accompany me','Not applicable — I did go / was not referred'
+        ], 'q8');
+        f += radioQ('Q9', 'Has the ASHA worker or camp staff followed up with you after the camp?', [
+          'Yes, multiple times','Yes, once',
+          'Not yet but I expect them to','No follow-up at all'
+        ], 'q9');
+        f += radioQ('Q10', 'Did the camp help you get linked to any government scheme?', [
+          'Yes — ABHA card','Yes — PMJAY / state insurance',
+          'Yes — Aadhaar-linked benefits','No scheme linkage was done'
+        ], 'q10');
+        return f;
+      }
+    });
+    all.push({
+      title: 'Health behaviour & satisfaction',
+      id: 'behaviour',
+      html: function(){
+        var f = '<div class="section-label">Behaviour change &amp; feedback</div>';
+        f += radioQ('Q11', 'Since attending the camp, have you made any changes in your daily life?', [
+          'Yes — diet (less salt, oil, sugar)','Yes — started or increased exercise',
+          'Yes — stopped or reduced tobacco / alcohol','No changes yet'
+        ], 'q11');
+        f += radioQ('Q12', 'Before this camp, were you spending money on private doctors for this health problem?', [
+          'Yes, regularly','Yes, occasionally',
+          'No — I was ignoring the problem','No — I had no known problem'
+        ], 'q12');
+        f += radioQ('Q13', 'How much did you spend out of pocket on follow-up tests or medicines after the camp?', [
+          'Nothing — all free','Less than ₹200','₹200–₹500','More than ₹500','Not sure'
+        ], 'q13', true);
+        f += radioQ('Q14', 'How satisfied are you with the overall PRANAA camp experience?', [
+          'Very satisfied','Satisfied','Neutral','Dissatisfied'
+        ], 'q14');
+        f += radioQ('Q15', 'Would you attend another camp and recommend it to others in your village?', [
+          'Yes, definitely — to both','Yes to attending, not sure about recommending',
+          'Not sure','No'
+        ], 'q15');
+        if(selectedType==='community'){
+          f += radioQ('Q16', 'If you were diagnosed with a health condition, did you tell your family or spouse? How did they react?', [
+            'Yes — family was supportive and helped with treatment',
+            'Yes — family knew but did not help much',
+            'Yes — family was worried or resistant',
+            'I did not tell anyone yet',
+            'I was not diagnosed with any condition'
+          ], 'q16', true);
+        }
+        return f;
+      }
+    });
+  }
+
+  else if(type === 'asha'){
+    all.push({
+      title: 'Community mobilisation',
+      id: 'asha_mob',
+      html: function(){
+        var f = '<div class="section-label">Mobilisation &amp; barriers</div>';
+        f += radioQ('Q1', 'Before PRANAA, how aware were people in your area about BP, blood sugar, and cancer?', [
+          'Very aware','Somewhat aware','Barely aware','Not aware at all'
+        ], 'q1');
+        f += radioQ('Q2', 'What method works best to convince people to attend NCD screening camps?', [
+          'Personal house visits','Community meetings / announcements',
+          'Referral from a trusted neighbour','Involvement of Panchayat / local leaders','All work equally'
+        ], 'q2');
+        f += radioQ('Q3', 'Has PRANAA made it easier for you to mobilise community members for screening?', [
+          'Yes, much easier','Yes, somewhat easier','No change','Made it harder'
+        ], 'q3');
+        f += radioQ('Q4', 'Which group is hardest to convince to come for screening?', [
+          'Working-age men','Women requiring family permission',
+          'Elderly people','People who feel healthy and see no need','Migrants / daily-wage workers'
+        ], 'q4');
+        f += radioQ('Q5', 'When a suspected case is identified, at which step does the care chain most commonly break?', [
+          'At screening — person refuses further tests',
+          'After screening — does not visit PHC',
+          'After PHC — does not go to district hospital',
+          'After diagnosis — does not start treatment',
+          'I have not observed this'
+        ], 'q5', true);
+        return f;
+      }
+    });
+    all.push({
+      title: 'Your role and support',
+      id: 'asha_role',
+      html: function(){
+        var f = '<div class="section-label">Role, workload &amp; support</div>';
+        f += radioQ('Q6', 'What change, if any, have you noticed in people\'s health habits after being diagnosed through PRANAA camps?', [
+          'Yes, many people changed habits','Yes, a few people changed','Rarely','No change observed'
+        ], 'q6', false, true);
+        f += radioQ('Q7', 'How adequate was the training and support you received for your role in PRANAA?', [
+          'Very adequate','Mostly adequate','Somewhat adequate','Not adequate'
+        ], 'q7');
+        f += radioQ('Q8', 'What additional support would most help you?', [
+          'Better incentives / remuneration','More training on NCD counselling',
+          'Transport support for follow-up visits','Digital tools for tracking patients'
+        ], 'q8');
+        f += radioQ('Q9', 'Approximately how much time per week do you spend on PRANAA activities?', [
+          'More than half my time','About a quarter of my time',
+          'Less than a quarter','Varies a lot — no fixed pattern','Cannot estimate'
+        ], 'q9', true);
+        f += radioQ('Q10', 'Have you received any incentives or extra compensation specifically for PRANAA work?', [
+          'Yes, regular incentives','Yes, occasionally',
+          'Recognition only (no financial)','Nothing additional','Not applicable'
+        ], 'q10', true);
+        f += radioQ('Q11', 'Overall, how useful has PRANAA been for your community?', [
+          'Very useful','Useful','Somewhat useful','Not useful','Cannot say'
+        ], 'q11');
+        return f;
+      }
+    });
+  }
+
+  else if(type === 'teacher'){
+    all.push({
+      title: 'School programme activities',
+      id: 'teacher_act',
+      html: function(){
+        var f = '<div class="section-label">School activities</div>';
+        f += checkQ('Q1', 'What types of PRANAA activities were conducted in your school?', [
+          'Health awareness sessions','Health day celebrations / competitions',
+          'Printed materials / posters','Student health quizzes or activities','All of the above'
+        ], 'q1');
+        f += radioQ('Q2', 'How relevant and age-appropriate were the NCD awareness sessions for your students?', [
+          'Very relevant and age-appropriate','Mostly appropriate',
+          'Somewhat appropriate','Not appropriate'
+        ], 'q2');
+        f += radioQ('Q3', 'How engaged were students during the PRANAA health sessions?', [
+          'Very engaged and participative','Mostly engaged','Partially engaged','Not engaged'
+        ], 'q3');
+        f += radioQ('Q4', 'After PRANAA sessions, what change was most noticeable in students?', [
+          'Better knowledge about diet and sugar','Increased awareness of tobacco risks',
+          'Greater interest in physical activity','Awareness of BP / diabetes risk in family',
+          'No noticeable change'
+        ], 'q4');
+        f += radioQ('Q5', 'Have students carried health messages home to their parents or families?', [
+          'Yes, many students','Yes, some students','Rarely','Not observed'
+        ], 'q5', true);
+        return f;
+      }
+    });
+    all.push({
+      title: 'Impact and sustainability',
+      id: 'teacher_impact',
+      html: function(){
+        var f = '<div class="section-label">Impact &amp; future</div>';
+        f += radioQ('Q6', 'Are you aware of any parents who attended a PRANAA screening camp because of their child\'s encouragement?', [
+          'Yes, several parents','Yes, one or two parents','Not that I know of','No'
+        ], 'q6');
+        f += radioQ('Q7', 'Have school practices changed as a result of PRANAA?', [
+          'Yes — increased sports time or health messaging',
+          'Yes — healthier mid-day meal practices','Minimal change','No change'
+        ], 'q7');
+        f += radioQ('Q8', 'Have you received resource materials (posters, videos, booklets) to continue health education independently?', [
+          'Yes — comprehensive materials received','Yes — some, but insufficient',
+          'Very little provided','Nothing received'
+        ], 'q8', true);
+        f += radioQ('Q9', 'How sustainable is NCD health education in your school without external support?', [
+          'Fully sustainable','Sustainable with minor support',
+          'Needs significant ongoing support','Not sustainable without external support'
+        ], 'q9');
+        f += radioQ('Q10', 'What would make school-based NCD sessions most effective going forward?', [
+          'More interactive activities (games, quizzes)','Involving parents directly in sessions',
+          'Regular sessions rather than one-time events','Integration into the school curriculum'
+        ], 'q10');
+        return f;
+      }
+    });
+  }
+
+  else if(type === 'panchayat'){
+    all.push({
+      title: 'Community & Panchayat involvement',
+      id: 'pan_inv',
+      html: function(){
+        var f = '<div class="section-label">Village participation</div>';
+        f += radioQ('Q1', 'How serious was the NCD problem in your village before PRANAA?', [
+          'Very serious — major health burden','Serious — common but unaddressed',
+          'Moderate — some awareness existed','Not considered a major problem','Don\'t know'
+        ], 'q1');
+        f += checkQ('Q2', 'How was the Panchayat involved in organising PRANAA camps?', [
+          'Provided venue and made announcements',
+          'Mobilised community leaders and helped with outreach',
+          'Supported linkage to government schemes',
+          'Helped identify non-participants',
+          'Not involved'
+        ], 'q2');
+        f += radioQ('Q3', 'How did the community generally receive the PRANAA NCD screening camps?', [
+          'Very positively — high participation','Positively — moderate participation',
+          'Mixed response','Mostly with hesitation or scepticism'
+        ], 'q3');
+        f += radioQ('Q4', 'Which group had the lowest participation in PRANAA camps?', [
+          'Working-age men','Women in conservative families',
+          'People in remote hamlets','Migrant or seasonal labourers',
+          'All participated roughly equally'
+        ], 'q4');
+        f += radioQ('Q5', 'What health-seeking behaviour change, if any, have you observed in the village since PRANAA?', [
+          'More people visiting the PHC voluntarily','Increased awareness of NCD symptoms',
+          'Reduction in tobacco use','Better medicine adherence among diagnosed patients',
+          'No visible change'
+        ], 'q5', false, true);
+        return f;
+      }
+    });
+    all.push({
+      title: 'Feedback & sustainability',
+      id: 'pan_sus',
+      html: function(){
+        var f = '<div class="section-label">Feedback &amp; future</div>';
+        f += radioQ('Q6', 'What do most villagers say about the quality of PRANAA camp services?', [
+          'Very satisfied','Satisfied','Mixed — some complaints about follow-up','Mostly dissatisfied'
+        ], 'q6');
+        f += radioQ('Q7', 'What is the most common complaint from villagers about PRANAA or follow-up care?', [
+          'Long distance to referred hospital','Cost of medicines or tests',
+          'No one to help with follow-up','Lack of information after screening'
+        ], 'q7');
+        f += radioQ('Q8', 'Has the Panchayat played any role in supporting diagnosed patients after screening?', [
+          'Yes — actively helped multiple patients','Yes — helped a few on request',
+          'Rarely — only when specifically asked','No — not seen as Panchayat\'s role'
+        ], 'q8', true);
+        f += radioQ('Q9', 'What external support is most needed to sustain NCD activities after PRANAA ends?', [
+          'Continued health camps by government',
+          'Better referral transport and cost support',
+          'Regular ASHA follow-up with diagnosed patients',
+          'State funding for PHC equipment and medicines'
+        ], 'q9');
+        f += radioQ('Q10', 'Overall, how useful has PRANAA been for your village?', [
+          'Very useful','Useful','Somewhat useful','Not useful','Cannot say'
+        ], 'q10');
+        return f;
+      }
+    });
+  }
+
+  else if(type === 'nurse'){
+    all.push({
+      title: 'Screening quality & equipment',
+      id: 'nurse_q',
+      html: function(){
+        var f = '<div class="section-label">Clinical screening</div>';
+        f += radioQ('Q1', 'How has PRANAA changed the way NCD screening is conducted at camps?', [
+          'Significantly improved the process','Moderately improved',
+          'Slightly improved','No change','Process worsened'
+        ], 'q1', false, true);
+        f += radioQ('Q2', 'What is the most common undetected condition you find at PRANAA camps?', [
+          'Undetected hypertension','Undetected diabetes / pre-diabetes',
+          'Obesity / high BMI','Suspected cancer (oral, cervical, breast)','Anaemia'
+        ], 'q2');
+        f += radioQ('Q3', 'Are equipment and supplies adequate at camp sites?', [
+          'Always adequate','Usually adequate','Sometimes inadequate','Often inadequate'
+        ], 'q3');
+        f += radioQ('Q4', 'Do you feel adequately trained for specialised cancer screenings (VIA, breast, oral)?', [
+          'Yes, fully trained and confident','Mostly trained','Partially trained',
+          'Not adequately trained','Not trained for cancer screening'
+        ], 'q4');
+        f += radioQ('Q5', 'Are you able to perform VIA, clinical breast exam, and oral cancer screening independently?', [
+          'Yes — all three independently','Yes — two of three',
+          'Only one — need support for others','No — need supervision for all',
+          'Not trained for cancer screening'
+        ], 'q5', true);
+        return f;
+      }
+    });
+    all.push({
+      title: 'Referral, follow-up & workload',
+      id: 'nurse_ref',
+      html: function(){
+        var f = '<div class="section-label">Referral &amp; workload</div>';
+        f += radioQ('Q6', 'How effective is the referral system for patients needing higher-level care?', [
+          'Very effective','Mostly effective','Partially effective','Not effective'
+        ], 'q6');
+        f += radioQ('Q7', 'What proportion of patients referred from camps actually complete their referral?', [
+          'More than 70%','50–70%','30–50%','Less than 30%','Don\'t have this data'
+        ], 'q7', false, true);
+        f += radioQ('Q8', 'How effective are digital tools in recording and tracking patient data at camps?', [
+          'Very effective','Mostly effective','Somewhat effective',
+          'Not effective','Not in use at our facility'
+        ], 'q8');
+        f += radioQ('Q9', 'How has PRANAA affected your overall workload?', [
+          'Significantly increased but manageable','Moderately increased and manageable',
+          'Unmanageable increase','No significant change'
+        ], 'q9');
+        f += radioQ('Q10', 'How confident are you in counselling a newly diagnosed patient on treatment adherence and lifestyle?', [
+          'Very confident','Mostly confident','Somewhat confident — need more practice',
+          'Not confident','Not part of my role'
+        ], 'q10', true);
+        f += radioQ('Q11', 'What improvement would most enhance the quality of NCD screening?', [
+          'More equipment and supplies','Better-designed referral and follow-up system',
+          'Additional staff at camps','Improved digital documentation tools'
+        ], 'q11');
+        return f;
+      }
+    });
+  }
+
+  else if(type === 'doctor'){
+    all.push({
+      title: 'PHC performance & integration',
+      id: 'doc_q',
+      html: function(){
+        var f = '<div class="section-label">PHC performance</div>';
+        f += radioQ('Q1', 'How would you describe the NCD situation in your PHC catchment area before PRANAA started?', [
+          'Very poor — almost no screening or detection',
+          'Poor — limited screening, many gaps',
+          'Moderate — some screening but inconsistent',
+          'Good — regular screening was happening'
+        ], 'q1');
+        f += radioQ('Q2', 'What change, if any, has NCD screening coverage shown at your PHC since PRANAA began?', [
+          'Significantly increased','Moderately increased',
+          'Slightly increased','No change','Decreased / Difficult to say'
+        ], 'q2', false, true);
+        f += radioQ('Q3', 'How effective is PRANAA\'s referral and follow-up mechanism?', [
+          'Very effective','Mostly effective','Somewhat effective','Not effective','Don\'t know'
+        ], 'q3');
+        f += radioQ('Q4', 'Where do patients most commonly drop off in the care chain?', [
+          'After screening (don\'t come to PHC)','After PHC (don\'t go to district hospital)',
+          'After diagnosis (don\'t start treatment)','After treatment start (don\'t continue)',
+          'Not observed / Don\'t know'
+        ], 'q4');
+        f += radioQ('Q5', 'How smoothly has PRANAA integrated with the existing NP-NCD programme?', [
+          'Very smoothly','Mostly smoothly','With some friction','Poorly integrated','Don\'t know'
+        ], 'q5');
+        return f;
+      }
+    });
+    all.push({
+      title: 'Training, equipment & sustainability',
+      id: 'doc_sus',
+      html: function(){
+        var f = '<div class="section-label">Capacity &amp; sustainability</div>';
+        f += radioQ('Q6', 'Has PRANAA supported staff training or upskilling at your PHC?', [
+          'Yes, extensively','Yes, to some extent','Minimally','Not at all'
+        ], 'q6');
+        f += radioQ('Q7', 'Has PRANAA improved availability of equipment and consumables at your PHC?', [
+          'Yes, significantly','Yes, moderately','Minimal improvement','No improvement'
+        ], 'q7');
+        f += radioQ('Q8', 'How well has PRANAA facilitated linkage to government schemes like ABHA and PMJAY?', [
+          'Very well — most eligible patients linked','Moderately — some patients linked',
+          'Partially — few linked','Not at all','Don\'t know'
+        ], 'q8');
+        f += radioQ('Q9', 'How sustainable are PRANAA\'s activities within government resources after the project ends?', [
+          'Fully sustainable','Mostly sustainable','Partially sustainable',
+          'Not sustainable without external support','Too early to say'
+        ], 'q9');
+        f += radioQ('Q10', 'What was the biggest challenge in implementing PRANAA at your PHC?', [
+          'Resolved fully','Partially resolved','Still ongoing','No major challenge faced'
+        ], 'q10', true);
+        f += radioQ('Q11', 'Which PRANAA input has been most valuable for your PHC?', [
+          'Community mobilization','Staff training',
+          'Equipment & consumables','Digital documentation tools','All equally valuable'
+        ], 'q11');
+        return f;
+      }
+    });
+  }
+
+  // ── FINAL SECTION: Open-ended ────────────────────────────────────────
+  all.push({
+    title: 'Your experience in your own words',
+    id: 'open',
+    html: function(){
+      var f = '<div class="section-label">Open-ended feedback</div>';
+      f += '<p class="desc">These are the most important questions. Please share as much or as little as you are comfortable with. There are no right or wrong answers.</p>';
+      f += openQ('O1', 'What is the most important change you have seen because of PRANAA?', 'open_o1');
+      f += openQ('O2', 'Can you describe one situation where PRANAA helped someone — or where it failed to help someone? What happened?', 'open_o2');
+      f += openQ('O3', 'What problems still remain that PRANAA did not solve?', 'open_o3');
+      f += openQ('O4', 'What is the one thing you would change or improve about PRANAA?', 'open_o4');
+      f += openQ('O5', 'Is there anything else you want us to know?', 'open_o5', false);
+      return f;
+    }
+  });
+
+  return all;
+}
+
+// ── HTML helpers ──────────────────────────────────────────────────────────────
+
+function field(label, type, id, required, options, placeholder){
+  var r = required ? '<span class="required">*</span>' : '';
+  var html = '<div class="q-block"><label class="field-label" for="' + id + '">' + label + r + '</label>';
+  if(type === 'select'){
+    html += '<select id="' + id + '" name="' + id + '">';
+    html += '<option value="">— Select —</option>';
+    (options || []).forEach(function(o){ html += '<option>' + o + '</option>'; });
+    html += '</select>';
+  } else {
+    html += '<input type="' + type + '" id="' + id + '" name="' + id + '" placeholder="' + (placeholder || '') + '">';
+  }
+  html += '</div>';
+  return html;
+}
+
+function twoCol(a, b){
+  return '<div class="field-row">' + a + b + '</div>';
+}
+
+function radioQ(num, question, options, id, isNew, isUpdated){
+  var badge = isNew ? '<span class="new-badge">&#9733; New</span>' : (isUpdated ? '<span class="new-badge" style="background:#fce4ec;color:#880e4f">&#9998; Updated</span>' : '');
+  var html = '<div class="q-block">';
+  html += '<span class="q-num">Q' + num + '</span>' + badge;
+  html += '<h3>' + question + ' <span style="font-size:.75rem;color:var(--muted);font-weight:400">(you can select more than one)</span></h3>';
+  html += '<div class="check-group">';
+  options.forEach(function(opt){
+    html += '<label onclick="toggleCheck(this)">';
+    html += '<input type="checkbox" name="' + id + '" value="' + opt + '"> ' + opt;
+    html += '</label>';
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function checkQ(num, question, options, id, isNew){
+  var badge = isNew ? '<span class="new-badge">&#9733; New</span>' : '';
+  var html = '<div class="q-block">';
+  html += '<span class="q-num">Q' + num + '</span>' + badge;
+  html += '<h3>' + question + ' <span style="font-size:.75rem;color:var(--muted);font-weight:400">(tick all that apply)</span></h3>';
+  html += '<div class="check-group">';
+  options.forEach(function(opt){
+    html += '<label onclick="toggleCheck(this)">';
+    html += '<input type="checkbox" name="' + id + '" value="' + opt + '"> ' + opt;
+    html += '</label>';
+  });
+  html += '</div></div>';
+  return html;
+}
+
+function openQ(num, question, id, required){
+  var r = (required !== false) ? '<span class="required">*</span>' : '';
+  return '<div class="q-block">' +
+    '<span class="q-num">O' + num.toString().replace('O','') + '</span>' +
+    '<h3>' + question + r + '</h3>' +
+    '<textarea id="' + id + '" name="' + id + '" placeholder="Write your answer here..."></textarea>' +
+    '</div>';
+}
+
+function selectRadio(el){
+  var group = el.closest('.radio-group');
+  group.querySelectorAll('label').forEach(function(l){ l.classList.remove('selected'); });
+  el.classList.add('selected');
+  el.querySelector('input').checked = true;
+}
+
+function toggleCheck(el){
+  el.classList.toggle('selected', el.querySelector('input').checked);
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+
+function renderSection(){
+  var sec = sections[currentSection];
+  var total = sections.length;
+  var pct = Math.round(((currentSection + 1) / (total + 1)) * 100);
+
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = 'Step ' + (currentSection + 1) + ' of ' + total;
+
+  var html = '<div class="card">';
+  html += '<h2>' + sec.title + '</h2>';
+  html += sec.html();
+  html += '</div>';
+  document.getElementById('form-sections').innerHTML = html;
+
+  document.getElementById('btn-prev').style.display = currentSection > 0 ? 'inline-flex' : 'none';
+  var isLast = currentSection === sections.length - 1;
+  document.getElementById('btn-next').style.display   = isLast ? 'none' : 'inline-flex';
+  document.getElementById('btn-submit').style.display = isLast ? 'inline-flex' : 'none';
+
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function nextSection(){
+  currentSection++;
+  renderSection();
+}
+
+function prevSection(){
+  if(currentSection > 0){ currentSection--; renderSection(); }
+}
+
+function submitForm(){
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressLabel').textContent = 'Completed';
+  document.getElementById('page-form').classList.remove('active');
+  document.getElementById('page-thanks').classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+</script>
+</body>
+</html>
